@@ -24,7 +24,7 @@ public class WindowView {
     private JMenuBar mb = new JMenuBar(); 
     private JMenu mnuFile = new JMenu("File"); 
     private JMenuItem mnuItemQuit = new JMenuItem("Quit");
-    private JmenuItem mnuItemOpen = new JMenuItem("Open");
+    private JMenuItem mnuItemOpen = new JMenuItem("Open");
     private JMenu mnuHelp = new JMenu("Help");
     private JMenuItem mnuItemAbout = new JMenuItem("About");
 
@@ -35,9 +35,10 @@ public class WindowView {
 	
 	f.setJMenuBar(mb);
 	
-
-	mnuFile.add(mnuItemQuit); 
+	//menu File
 	mnuFile.add(mnuItemOpen);
+	mnuFile.add(mnuItemQuit); 
+	//menu About
 	mnuHelp.add(mnuItemAbout); 
 	mb.add(mnuFile); 
 	mb.add(mnuHelp);
@@ -45,11 +46,20 @@ public class WindowView {
 	f.getContentPane().setLayout(new BorderLayout());
 	f.addWindowListener(new ListenCloseWdw());
 	mnuItemQuit.addActionListener(new ListenMenuQuit());
+	mnuItemOpen.addActionListener(new ListenMenuOpen());
     }
 
     public class ListenMenuQuit implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    System.exit(0);
+	}
+    }
+    
+    public class ListenMenuOpen implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    System.out.println("Otwieramy pliczek!");
+	    //TODO otwieranie plików tutaj zrobić
+
 	}
     }
 
