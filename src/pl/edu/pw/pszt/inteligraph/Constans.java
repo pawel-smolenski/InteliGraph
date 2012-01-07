@@ -4,7 +4,7 @@ public class Constans {
     /**
      * Nazwa aplikacji.
      */
-    public static String APP_NAME = "InteliGraph";
+    public static final String APP_NAME = "InteliGraph";
     
     /**
      * Wysokość okna.
