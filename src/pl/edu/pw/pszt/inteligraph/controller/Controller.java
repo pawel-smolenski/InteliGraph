@@ -1,8 +1,5 @@
 package pl.edu.pw.pszt.inteligraph.controller;
 
-import java.util.concurrent.BlockingQueue;
-
-import pl.edu.pw.pszt.inteligraph.events.Event;
 import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
 import pl.edu.pw.pszt.inteligraph.model.Model;
 import pl.edu.pw.pszt.inteligraph.view.View;
