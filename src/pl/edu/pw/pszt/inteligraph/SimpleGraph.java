@@ -16,11 +16,11 @@ public class SimpleGraph extends JFrame {
     
     Graph g = getGraph();
     VisualizationViewer<Integer,String> vv = 
-     new VisualizationViewer<Integer,String>(new FRLayout(g),
+    		new VisualizationViewer<Integer,String>(new FRLayout(g),
      new Dimension (300,200));
     getContentPane().add(vv);
  
-    pack();
+    //pack();
     setSize (new Dimension (400, 300));
     setVisible(true);
   }

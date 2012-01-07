@@ -1,6 +1,7 @@
 package pl.edu.pw.pszt.inteligraph.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -10,6 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.SparseGraph;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
 
 import pl.edu.pw.pszt.inteligraph.Constans;
 import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
@@ -49,7 +55,26 @@ public class View {
 		f.addWindowListener(new ListenCloseWdw());
 		menuItemQuit.addActionListener(new ListenMenuQuit());
 		menuItemOpen.addActionListener(new ListenMenuOpen());
+		
+		Graph g = this.getGraph();
+		
+		VisualizationViewer<Integer,String> vv = 
+	    		new VisualizationViewer<Integer,String>(new FRLayout(g),
+	     new Dimension (300,200));
+	    f.getContentPane().add(vv, BorderLayout.CENTER);
+		
 	}
+	
+	public Graph getGraph() {
+	    Graph<Integer, String> g = new SparseGraph<Integer, String>();
+	    g.addVertex((Integer)1);
+	    g.addVertex((Integer)2);
+	    g.addVertex((Integer)3);
+	    g.addEdge("Edge-A", 1, 2);
+	    g.addEdge("Edge-B", 2, 3);
+	    g.addEdge("Edge-C", 3, 1);
+	    return g;
+	  }
 
 	/**
 	 * Listlener dla opcji "Quit".
