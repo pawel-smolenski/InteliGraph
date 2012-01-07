@@ -20,10 +20,8 @@ public class InteliGraph {
     	View view = new View(blockingQueue);
     	Controller controller = new Controller(model, view, blockingQueue);
     	
-//    	controller.programStart();
-    	SimpleGraph simpleGraph = new SimpleGraph();
+    	controller.programStart();
+//    	SimpleGraph simpleGraph = new SimpleGraph();
     }
     
-
-
 }
