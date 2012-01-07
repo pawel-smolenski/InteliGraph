@@ -1,17 +1,74 @@
 package pl.edu.pw.pszt.inteligraph.view;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import pl.edu.pw.pszt.inteligraph.Constans;
 import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
 
 public class View {
 
+	private JFrame f = new JFrame(Constans.APP_NAME);
+	// Menu
+	private JMenuBar mb = new JMenuBar();
+	private JMenu mnuFile = new JMenu("File");
+	private JMenuItem mnuItemQuit = new JMenuItem("Quit");
+	private JMenuItem mnuItemOpen = new JMenuItem("Open");
+	private JMenu mnuHelp = new JMenu("Help");
+	private JMenuItem mnuItemAbout = new JMenuItem("About");
+
 	public View(EventsBlockingQueue blockingQueue) {
-		// TODO Auto-generated constructor stub
+
+		f.setJMenuBar(mb);
+
+		// menu File
+		mnuFile.add(mnuItemOpen);
+		mnuFile.add(mnuItemQuit);
+		// menu About
+		mnuHelp.add(mnuItemAbout);
+		mb.add(mnuFile);
+		mb.add(mnuHelp);
+
+		f.getContentPane().setLayout(new BorderLayout());
+		f.addWindowListener(new ListenCloseWdw());
+		mnuItemQuit.addActionListener(new ListenMenuQuit());
+		mnuItemOpen.addActionListener(new ListenMenuOpen());
 	}
 
+	public class ListenMenuQuit implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	}
+
+	public class ListenMenuOpen implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Otwieramy pliczek!");
+			// TODO otwieranie plików tutaj zrobić
+
+		}
+	}
+
+	public class ListenCloseWdw extends WindowAdapter {
+		public void windowClosing(WindowEvent e) {
+			System.exit(0);
+		}
+	}
+
+
 	public void showWindow() {
-		// TODO Auto-generated method stub
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(Constans.WINDOW_WIDTH, Constans.WINDOW_HEIGHT);
 		
+		f.setVisible(true);
 	}
 
 }
