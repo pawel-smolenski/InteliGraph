@@ -2,20 +2,28 @@ package pl.edu.pw.pszt.inteligraph.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import org.apache.commons.collections15.Transformer;
+import org.apache.commons.collections15.TransformerUtils;
+
 import pl.edu.pw.pszt.inteligraph.Constans;
 import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.StaticLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
@@ -29,58 +37,49 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
  */
 public class View {
 
-    private JFrame f = new JFrame(Constans.APP_NAME);
-    // Menu
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuItemQuit = new JMenuItem("Quit");
-    private JMenuItem menuItemOpen = new JMenuItem("Open");
-    private JMenu menuHelp = new JMenu("Help");
-    private JMenuItem menuItemAbout = new JMenuItem("About");
-    
 
-    /**
-     * Tworzy elementy wyświetlanego okna.
-     * 
-     * @param blockingQueue
-     */
-    public View(EventsBlockingQueue blockingQueue) {
+	private JFrame f = new JFrame(Constans.APP_NAME);
+	// Menu
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu menuFile = new JMenu("File");
+	private JMenuItem menuItemQuit = new JMenuItem("Quit");
+	private JMenuItem menuItemOpen = new JMenuItem("Open");
+	private JMenu menuHelp = new JMenu("Help");
+	private JMenuItem menuItemAbout = new JMenuItem("About");
+	
+	private GraphView graphView;
 
-	f.setJMenuBar(menuBar);
+	/**
+	 * Tworzy elementy wyświetlanego okna.
+	 * @param blockingQueue
+	 */
+	public View(EventsBlockingQueue blockingQueue) {
 
-	// menu File
-	menuFile.add(menuItemOpen);
-	menuFile.add(menuItemQuit);
-	// menu About
-	menuHelp.add(menuItemAbout);
-	menuBar.add(menuFile);
-	menuBar.add(menuHelp);
+		f.setJMenuBar(menuBar);
 
-	f.getContentPane().setLayout(new BorderLayout());
+		// menu File
+		menuFile.add(menuItemOpen);
+		menuFile.add(menuItemQuit);
+		// menu About
+		menuHelp.add(menuItemAbout);
+		menuBar.add(menuFile);
+		menuBar.add(menuHelp);
 
-	f.addWindowListener(new ListenCloseWdw());
-	menuItemQuit.addActionListener(new ListenMenuQuit());
-	menuItemOpen.addActionListener(new ListenMenuOpen());
+		f.getContentPane().setLayout(new BorderLayout());
+		f.addWindowListener(new ListenCloseWdw());
+		menuItemQuit.addActionListener(new ListenMenuQuit());
+		menuItemOpen.addActionListener(new ListenMenuOpen());
+		
+		graphView = new GraphView();
+		
+		f.getContentPane().add(graphView.getVisualizationViewer(), BorderLayout.CENTER);
+		
+	}
 
 	
-	Graph g = this.getGraph();
-	// Layout<V, E>, VisualizationComponent<V,E>
-	Layout<Integer, String> layout = new CircleLayout(g);
-	layout.setSize(new Dimension(300, 300));
-	VisualizationViewer<Integer, String> vv = new VisualizationViewer<Integer, String>(
-		layout);
-	vv.setPreferredSize(new Dimension(350, 350));
-	// Show vertex and edge labels
-	vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-	vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-	// Create a graph mouse and add it to the visualization component
-	DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
-	gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
-	vv.setGraphMouse(gm);
 
-	f.getContentPane().add(vv, BorderLayout.CENTER);
 
-    }
+    
 
     public Graph getGraph() {
 	Graph<Integer, String> g = new SparseGraph<Integer, String>();
