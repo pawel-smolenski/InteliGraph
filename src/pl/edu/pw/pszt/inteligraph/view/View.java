@@ -37,6 +37,7 @@ public class View {
     private JMenuItem menuItemOpen = new JMenuItem("Open");
     private JMenu menuHelp = new JMenu("Help");
     private JMenuItem menuItemAbout = new JMenuItem("About");
+    
 
     /**
      * Tworzy elementy wyświetlanego okna.
@@ -61,6 +62,7 @@ public class View {
 	menuItemQuit.addActionListener(new ListenMenuQuit());
 	menuItemOpen.addActionListener(new ListenMenuOpen());
 
+	
 	Graph g = this.getGraph();
 	// Layout<V, E>, VisualizationComponent<V,E>
 	Layout<Integer, String> layout = new CircleLayout(g);
