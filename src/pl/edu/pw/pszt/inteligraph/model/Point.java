@@ -4,7 +4,7 @@ package pl.edu.pw.pszt.inteligraph.model;
  * Klasa reprezentująca punkt będący środkiem wierzchołka grafu 
  */
 public class Point {
-	Coordinate x, y;
+	int x, y;
 	
 	/**
 	 * @param x
@@ -12,7 +12,7 @@ public class Point {
 	 * @param y
 	 * 		współrzędna y-owa
 	 */
-	public Point(Coordinate x, Coordinate y) {
+	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
