@@ -2,21 +2,28 @@ package pl.edu.pw.pszt.inteligraph.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import org.apache.commons.collections15.Transformer;
+import org.apache.commons.collections15.TransformerUtils;
+
 import pl.edu.pw.pszt.inteligraph.Constans;
 import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
-import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.StaticLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
@@ -63,7 +70,12 @@ public class View {
 		Graph g = this.getGraph();
 		
         // Layout<V, E>, VisualizationComponent<V,E>
-        Layout<Integer, String> layout = new CircleLayout(g);
+		Map map = new HashMap<Integer, Point2D>();
+		map.put(1, new Point(0, 0));
+		map.put(2, new Point(0,200));
+		map.put(3, new Point(0,300));
+		Transformer<Integer, Point2D> trans = TransformerUtils.mapTransformer(map);
+        Layout<Integer, String> layout = new StaticLayout(g, trans);
         layout.setSize(new Dimension(300,300));
         VisualizationViewer<Integer,String> vv = 
                 new VisualizationViewer<Integer,String>(layout);
