@@ -14,6 +14,10 @@ import javax.swing.JMenuItem;
 import pl.edu.pw.pszt.inteligraph.Constans;
 import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
 
+/**
+ * Główna klasa tworząca graficzny interfejs użytkownika.
+ * 
+ */
 public class View {
 
 	private JFrame f = new JFrame(Constans.APP_NAME);
@@ -25,6 +29,10 @@ public class View {
 	private JMenu menuHelp = new JMenu("Help");
 	private JMenuItem menuItemAbout = new JMenuItem("About");
 
+	/**
+	 * Tworzy elementy wyświetlanego okna.
+	 * @param blockingQueue
+	 */
 	public View(EventsBlockingQueue blockingQueue) {
 
 		f.setJMenuBar(menuBar);
@@ -43,12 +51,18 @@ public class View {
 		menuItemOpen.addActionListener(new ListenMenuOpen());
 	}
 
+	/**
+	 * Listlener dla opcji "Quit".
+	 */
 	public class ListenMenuQuit implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 		}
 	}
 
+	/**
+	 * Listlener dla otwierania pliku.
+	 */
 	public class ListenMenuOpen implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Otwieramy pliczek!");
@@ -57,6 +71,9 @@ public class View {
 		}
 	}
 
+	/**
+	 * Listlener obsługujący zamykanie okna.
+	 */
 	public class ListenCloseWdw extends WindowAdapter {
 		public void windowClosing(WindowEvent e) {
 			System.exit(0);
@@ -64,6 +81,9 @@ public class View {
 	}
 
 
+	/**
+	 * Wyświetla okno.
+	 */
 	public void showWindow() {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(Constans.WINDOW_WIDTH, Constans.WINDOW_HEIGHT);
