@@ -14,6 +14,8 @@ import javax.swing.JMenuItem;
 import pl.edu.pw.pszt.inteligraph.Constans;
 
 
+
+
 /**
  * Główna klasa tworząca graficzny interfejs użytkownika.
  * 

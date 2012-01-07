@@ -1,18 +1,27 @@
 package pl.edu.pw.pszt.inteligraph;
 
-import pl.edu.pw.pszt.inteligraph.GUI.WindowView;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import pl.edu.pw.pszt.inteligraph.controller.Controller;
+import pl.edu.pw.pszt.inteligraph.events.Event;
+import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
+import pl.edu.pw.pszt.inteligraph.model.Model;
+import pl.edu.pw.pszt.inteligraph.view.View;
 
 
 public class InteliGraph {
 
-    private static WindowView windowView; 
-    
     /**
      * @param args
      */
     public static void main(String[] args) {
-	windowView = new WindowView();
-	windowView.show();
+    	EventsBlockingQueue blockingQueue = new EventsBlockingQueue();
+    	Model model = new Model();
+    	View view = new View(blockingQueue);
+    	Controller controller = new Controller(model, view, blockingQueue);
+    	
+    	controller.programStart();
     }
 
 }
