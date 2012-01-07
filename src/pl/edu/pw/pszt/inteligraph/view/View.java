@@ -29,6 +29,7 @@ import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
+import edu.uci.ics.jung.visualization.decorators.EdgeShape;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 
 /**
@@ -70,9 +71,29 @@ public class View {
 		menuItemQuit.addActionListener(new ListenMenuQuit());
 		menuItemOpen.addActionListener(new ListenMenuOpen());
 		
-		graphView = new GraphView();
+		Graph g = this.getGraph();
 		
-		f.getContentPane().add(graphView.getVisualizationViewer(), BorderLayout.CENTER);
+        // Layout<V, E>, VisualizationComponent<V,E>
+		Map map = new HashMap<Integer, Point2D>();
+		map.put(1, new Point(0, 0));
+		map.put(2, new Point(100,200));
+		map.put(3, new Point(200,300));
+		Transformer<Integer, Point2D> trans = TransformerUtils.mapTransformer(map);
+        Layout<Integer, String> layout = new StaticLayout(g, trans);
+        layout.setSize(new Dimension(300,300));
+        VisualizationViewer<Integer,String> vv = 
+                new VisualizationViewer<Integer,String>(layout);
+        vv.setPreferredSize(new Dimension(350,350));
+        // Show vertex and edge labels
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line());
+        // Create a graph mouse and add it to the visualization component
+        DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
+        gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
+        vv.setGraphMouse(gm);
+		
+		f.getContentPane().add(vv, BorderLayout.CENTER);
 		
 	}
 
