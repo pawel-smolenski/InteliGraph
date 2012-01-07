@@ -12,13 +12,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import pl.edu.pw.pszt.inteligraph.Constans;
+import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
-
-import pl.edu.pw.pszt.inteligraph.Constans;
-import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
+import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
+import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
+import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 
 /**
  * Główna klasa tworząca graficzny interfejs użytkownika.
@@ -58,9 +62,20 @@ public class View {
 		
 		Graph g = this.getGraph();
 		
-		VisualizationViewer<Integer,String> vv = 
-	    		new VisualizationViewer<Integer,String>(new FRLayout(g),
-	     new Dimension (300,200));
+        // Layout<V, E>, VisualizationComponent<V,E>
+        Layout<Integer, String> layout = new CircleLayout(g);
+        layout.setSize(new Dimension(300,300));
+        VisualizationViewer<Integer,String> vv = 
+                new VisualizationViewer<Integer,String>(layout);
+        vv.setPreferredSize(new Dimension(350,350));
+        // Show vertex and edge labels
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+        // Create a graph mouse and add it to the visualization component
+        DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
+        gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
+        vv.setGraphMouse(gm);
+		
 	    f.getContentPane().add(vv, BorderLayout.CENTER);
 		
 	}
