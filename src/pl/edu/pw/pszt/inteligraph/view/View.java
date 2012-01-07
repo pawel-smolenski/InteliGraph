@@ -18,29 +18,29 @@ public class View {
 
 	private JFrame f = new JFrame(Constans.APP_NAME);
 	// Menu
-	private JMenuBar mb = new JMenuBar();
-	private JMenu mnuFile = new JMenu("File");
-	private JMenuItem mnuItemQuit = new JMenuItem("Quit");
-	private JMenuItem mnuItemOpen = new JMenuItem("Open");
-	private JMenu mnuHelp = new JMenu("Help");
-	private JMenuItem mnuItemAbout = new JMenuItem("About");
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu menuFile = new JMenu("File");
+	private JMenuItem menuItemQuit = new JMenuItem("Quit");
+	private JMenuItem menuItemOpen = new JMenuItem("Open");
+	private JMenu menuHelp = new JMenu("Help");
+	private JMenuItem menuItemAbout = new JMenuItem("About");
 
 	public View(EventsBlockingQueue blockingQueue) {
 
-		f.setJMenuBar(mb);
+		f.setJMenuBar(menuBar);
 
 		// menu File
-		mnuFile.add(mnuItemOpen);
-		mnuFile.add(mnuItemQuit);
+		menuFile.add(menuItemOpen);
+		menuFile.add(menuItemQuit);
 		// menu About
-		mnuHelp.add(mnuItemAbout);
-		mb.add(mnuFile);
-		mb.add(mnuHelp);
+		menuHelp.add(menuItemAbout);
+		menuBar.add(menuFile);
+		menuBar.add(menuHelp);
 
 		f.getContentPane().setLayout(new BorderLayout());
 		f.addWindowListener(new ListenCloseWdw());
-		mnuItemQuit.addActionListener(new ListenMenuQuit());
-		mnuItemOpen.addActionListener(new ListenMenuOpen());
+		menuItemQuit.addActionListener(new ListenMenuQuit());
+		menuItemOpen.addActionListener(new ListenMenuOpen());
 	}
 
 	public class ListenMenuQuit implements ActionListener {
