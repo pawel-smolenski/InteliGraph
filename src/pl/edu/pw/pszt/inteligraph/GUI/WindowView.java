@@ -24,6 +24,7 @@ public class WindowView {
     private JMenuBar mb = new JMenuBar(); 
     private JMenu mnuFile = new JMenu("File"); 
     private JMenuItem mnuItemQuit = new JMenuItem("Quit");
+    private JmenuItem mnuItemOpen = new JMenuItem("Open");
     private JMenu mnuHelp = new JMenu("Help");
     private JMenuItem mnuItemAbout = new JMenuItem("About");
 
@@ -36,6 +37,7 @@ public class WindowView {
 	
 
 	mnuFile.add(mnuItemQuit); 
+	mnuFile.add(mnuItemOpen);
 	mnuHelp.add(mnuItemAbout); 
 	mb.add(mnuFile); 
 	mb.add(mnuHelp);
