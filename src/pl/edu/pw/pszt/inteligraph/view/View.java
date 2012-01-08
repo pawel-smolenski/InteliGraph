@@ -75,7 +75,8 @@ public class View {
 	public void actionPerformed(ActionEvent e) {
 	    System.out.println("Otwieramy pliczek!");
 	    // TODO otwieranie plików tutaj zrobić
-
+	    
+	    graphView.refresh();
 	}
     }
 
