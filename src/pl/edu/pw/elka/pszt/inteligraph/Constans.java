@@ -1,4 +1,4 @@
-package pl.edu.pw.pszt.inteligraph;
+package pl.edu.pw.elka.pszt.inteligraph;
 
 public class Constans {
     /**

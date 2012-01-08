@@ -1,14 +1,14 @@
-package pl.edu.pw.pszt.inteligraph.controller;
+package pl.edu.pw.elka.pszt.inteligraph.controller;
 
 import java.util.Map;
 
-import pl.edu.pw.pszt.inteligraph.events.Event;
-import pl.edu.pw.pszt.inteligraph.events.EventHandler;
-import pl.edu.pw.pszt.inteligraph.events.EventName;
-import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
-import pl.edu.pw.pszt.inteligraph.events.EventsHandlersMap;
-import pl.edu.pw.pszt.inteligraph.model.Model;
-import pl.edu.pw.pszt.inteligraph.view.View;
+import pl.edu.pw.elka.pszt.inteligraph.events.Event;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventHandler;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventsHandlersMap;
+import pl.edu.pw.elka.pszt.inteligraph.model.Model;
+import pl.edu.pw.elka.pszt.inteligraph.view.View;
 
 public class Controller {
 

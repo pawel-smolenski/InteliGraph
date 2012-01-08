@@ -1,4 +1,4 @@
-package pl.edu.pw.pszt.inteligraph.model;
+package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.util.ArrayList;
 

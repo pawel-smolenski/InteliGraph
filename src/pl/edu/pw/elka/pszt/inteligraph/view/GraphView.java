@@ -1,4 +1,4 @@
-package pl.edu.pw.pszt.inteligraph.view;
+package pl.edu.pw.elka.pszt.inteligraph.view;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.TransformerUtils;
 
-import pl.edu.pw.pszt.inteligraph.Constans;
+import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.layout.StaticLayout;
 import edu.uci.ics.jung.graph.Graph;

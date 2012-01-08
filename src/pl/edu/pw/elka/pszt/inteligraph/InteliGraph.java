@@ -1,9 +1,9 @@
-package pl.edu.pw.pszt.inteligraph;
+package pl.edu.pw.elka.pszt.inteligraph;
 
-import pl.edu.pw.pszt.inteligraph.controller.Controller;
-import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
-import pl.edu.pw.pszt.inteligraph.model.Model;
-import pl.edu.pw.pszt.inteligraph.view.View;
+import pl.edu.pw.elka.pszt.inteligraph.controller.Controller;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
+import pl.edu.pw.elka.pszt.inteligraph.model.Model;
+import pl.edu.pw.elka.pszt.inteligraph.view.View;
 
 public class InteliGraph {
 

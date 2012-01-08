@@ -1,4 +1,4 @@
-package pl.edu.pw.pszt.inteligraph.events;
+package pl.edu.pw.elka.pszt.inteligraph.events;
 
 /**
  * Enumeracja zawierająca nazwy wszystkich zdarzeń jakie mogą być zgłaszane

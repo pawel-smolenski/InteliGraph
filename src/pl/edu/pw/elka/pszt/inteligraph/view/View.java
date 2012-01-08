@@ -1,4 +1,4 @@
-package pl.edu.pw.pszt.inteligraph.view;
+package pl.edu.pw.elka.pszt.inteligraph.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -11,8 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import pl.edu.pw.pszt.inteligraph.Constans;
-import pl.edu.pw.pszt.inteligraph.events.EventsBlockingQueue;
+import pl.edu.pw.elka.pszt.inteligraph.Constans;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 
 /**
  * Główna klasa tworząca graficzny interfejs użytkownika.
