@@ -1,7 +1,6 @@
 package pl.edu.pw.elka.pszt.inteligraph.model;
 
-import java.awt.Point;
-import java.util.Map;
+import java.io.File;
 
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
@@ -20,6 +19,20 @@ public class Model
 		this.graph = new SparseGraph<VertexName, Object>();
 	}
 	
+	
+	/**
+	 * @return Graf
+	 */
+	public Graph<VertexName, Object> getGraph()
+	{
+		return graph;
+	}
+
+	public void buildGraph(File xmlFile)
+	{
+		//TODO: Podpiąć budowanie grafu na podstawie pliku XML
+	}
+
 	/**
 	 * @return Najlepsze uzyskane rozmieszczenie 
 	 * @throws Exception 
