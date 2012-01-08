@@ -2,11 +2,15 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.io.File;
 
+import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
+
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
 
 public class Model
 {
+	private EventsBlockingQueue blockingQueue;
+	
 	/**
 	 * Przechowuje logiczny model grafu
 	 */
@@ -14,8 +18,9 @@ public class Model
 	
 	private SubjectCollection bestSubjectCollection;
 	
-	public Model()
+	public Model(EventsBlockingQueue blockingQueue)
 	{
+		this.blockingQueue = blockingQueue;
 		this.graph = new SparseGraph<VertexName, Object>();
 	}
 	
@@ -67,5 +72,13 @@ public class Model
 	public void calculateVerticesPositions(Integer mi, Integer lambda)
 	{
 		this.calculateVerticesPositions(mi, lambda, null);
+	}
+	
+	/**
+	 * Przerywa obliczenia
+	 */
+	public void stopCalculations()
+	{
+		
 	}
 }
