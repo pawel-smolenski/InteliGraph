@@ -49,7 +49,7 @@ public class View {
 		menuBar.add(menuFile);
 		menuBar.add(menuHelp);
 		
-		graphParametersPanel = new GraphParametersPanel();
+		graphParametersPanel = new GraphParametersPanel(blockingQueue);
 
 		f.getContentPane().setLayout(new BorderLayout());
 		f.addWindowListener(new ListenCloseWdw());

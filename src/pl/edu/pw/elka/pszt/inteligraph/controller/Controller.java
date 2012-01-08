@@ -42,7 +42,42 @@ public class Controller {
 			public void execute() {
 				view.showWindow();
 			}
-		});		
+		});
+		
+		eventHandlers.put(EventName.DRAW_GRAPH_N, new EventHandler() {
+		    
+		    @Override
+		    public void execute() {
+			// TODO Auto-generated method stub
+			
+		    }
+		});
+		
+		eventHandlers.put(EventName.DRAW_GRAPH_INF, new EventHandler() {
+		    
+		    @Override
+		    public void execute() {
+			// TODO Auto-generated method stub
+			
+		    }
+		});
+		
+		eventHandlers.put(EventName.DRAW_GRAPH_STOP, new EventHandler() {
+		    
+		    @Override
+		    public void execute() {
+			// TODO Auto-generated method stub
+			
+		    }
+		});
+		eventHandlers.put(EventName.CHOOSE_FILE, new EventHandler() {
+		    
+		    @Override
+		    public void execute() {
+			// TODO Auto-generated method stub
+			
+		    }
+		});
 	}
 
 	/**
