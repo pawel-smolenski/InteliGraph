@@ -14,28 +14,30 @@ public class Model
 	/**
 	 * Przechowuje logiczny model grafu
 	 */
-	private Graph<VertexName, Object> graph;
+	private Graph<VertexName, String> graph;
 	
 	private SubjectCollection bestSubjectCollection;
 	
 	public Model(EventsBlockingQueue blockingQueue)
 	{
 		this.blockingQueue = blockingQueue;
-		this.graph = new SparseGraph<VertexName, Object>();
+		this.graph = new SparseGraph<VertexName, String>();
 	}
 	
 	
 	/**
 	 * @return Graf
 	 */
-	public Graph<VertexName, Object> getGraph()
+	public Graph<VertexName, String> getGraph()
 	{
 		return graph;
 	}
 
 	public void buildGraph(File xmlFile)
 	{
-		//TODO: Podpiąć budowanie grafu na podstawie pliku XML
+		GraphParser read = new GraphParser();
+		InputGraph readConfig = read.readXmlGraph(xmlFile);
+		graph = readConfig.getGraph();
 	}
 
 	/**
