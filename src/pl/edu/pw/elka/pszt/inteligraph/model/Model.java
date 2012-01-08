@@ -1,12 +1,18 @@
 package pl.edu.pw.elka.pszt.inteligraph.model;
 
+import java.awt.Point;
 import java.io.File;
+import java.util.Collection;
 
+import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
+import sun.security.provider.certpath.Vertex;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
 
 public class Model
 {
+	private EventsBlockingQueue blockingQueue;
+	
 	/**
 	 * Przechowuje logiczny model grafu
 	 */
@@ -14,8 +20,9 @@ public class Model
 	
 	private SubjectCollection bestSubjectCollection;
 	
-	public Model()
+	public Model(EventsBlockingQueue blockingQueue)
 	{
+		this.blockingQueue = blockingQueue;
 		this.graph = new SparseGraph<VertexName, String>();
 	}
 	
@@ -63,11 +70,54 @@ public class Model
 	 */
 	public void calculateVerticesPositions(Integer mi, Integer lambda, Integer iterations)
 	{
+		Population basePopulation = new Population();
+		SubjectCollection subjectCollection;
+		Subject subject;
+		Point point;
+		Deviation deviation;
 		
+		Collection<VertexName> verticies = this.graph.getVertices();
+		
+		basePopulation = this.generateFirstPopulation(verticies, mi);
+		
+	}
+	
+	/**
+	 * @param mi
+	 * @return Pierwsza populacja
+	 */
+	private Population generateFirstPopulation(Collection<VertexName> verticies, Integer mi)
+	{
+		Population firstPopulation = null;
+		
+		//Generowanie "mi" losowych rozwiązań(SubjectCollections)
+		for(int i=0; i < mi; i++)
+		{
+			//Dla każdego wierzchołka
+			for(VertexName vertex : verticies)
+			{
+				//Generowanie punktu
+				//Generowanie odchylenia
+				//Tworzenie osobnika
+				//Dodawanie osobnika do rozwiązania
+			}
+			
+			//Dodawanie rozwiązania do populacji
+		}
+				
+		return firstPopulation;
 	}
 	
 	public void calculateVerticesPositions(Integer mi, Integer lambda)
 	{
 		this.calculateVerticesPositions(mi, lambda, null);
+	}
+	
+	/**
+	 * Przerywa obliczenia
+	 */
+	public void stopCalculations()
+	{
+		
 	}
 }
