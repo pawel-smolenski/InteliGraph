@@ -43,9 +43,10 @@ public class GraphView {
 
 	visualizationViewer = new VisualizationViewer<Integer, String>(layout);
 
-	// oznaczenia wierzchołków i
+	// oznaczenia wierzchołków 
 	visualizationViewer.getRenderContext().setVertexLabelTransformer(
 		new ToStringLabeller());
+	// oznaczenia krawędzi
 	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
 		new ToStringLabeller());
 	// linie proste
@@ -66,6 +67,16 @@ public class GraphView {
 	visualizationViewer.updateUI();
     }
 
+    /**
+     * Ustawia liczbę wierzchołków grafu.
+     * @param howMany Ile wierzchołków
+     */
+    public void setNumberOfVertices(int howMany) {
+	for (int i = 0; i < howMany; ++i) {
+	    graph.addVertex((Integer) i);
+	}
+    }
+    
     /**
      * Zwraca widok utworzonego grafu, wraz z dołączoną obsługą myszki.
      * 
