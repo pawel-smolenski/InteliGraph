@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.pszt.inteligraph.controller;
+package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,7 +11,6 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import pl.edu.pw.elka.pszt.inteligraph.model.InputGraph;
 
 public class GraphParser 
 {
