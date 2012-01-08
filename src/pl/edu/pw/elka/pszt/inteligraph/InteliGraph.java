@@ -13,7 +13,7 @@ public class InteliGraph {
     public static void main(String[] args) {
 
 	EventsBlockingQueue blockingQueue = new EventsBlockingQueue();
-	Model model = new Model();
+	Model model = new Model(blockingQueue);
 	View view = new View(blockingQueue);
 	Controller controller = new Controller(model, view, blockingQueue);
 
