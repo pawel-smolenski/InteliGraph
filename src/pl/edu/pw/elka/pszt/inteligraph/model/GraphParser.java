@@ -1,5 +1,6 @@
-package pl.edu.pw.elka.pszt.inteligraph.controller;
+package pl.edu.pw.elka.pszt.inteligraph.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,7 +12,6 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import pl.edu.pw.elka.pszt.inteligraph.model.InputGraph;
 
 public class GraphParser 
 {
@@ -21,13 +21,13 @@ public class GraphParser
 	static final String BEGIN = "begin";
 	static final String END = "end";
 	private String EdegName;
-	private Integer EdegBegin, EdegEnd;
+	private VertexName EdegBegin, EdegEnd;
 	
 	/**
 	 * 
 	 * 
 	 */
-	public InputGraph readConfig(String configFile) {
+	public InputGraph readXmlGraph(File configFile) {
 		
 		InputGraph NewGraph = new InputGraph();
 		try {
@@ -45,7 +45,7 @@ public class GraphParser
 					if (startElement.getName().getLocalPart() == (VERTEX)) {
 
 						event = eventReader.nextEvent();
-						NewGraph.addNewVertex(Integer.parseInt(event.asCharacters().getData()));
+						NewGraph.addNewVertex( new VertexName(Integer.parseInt(event.asCharacters().getData())) );
 					}
 					if (startElement.getName().getLocalPart() == (EDEG)) {
 						
@@ -61,13 +61,13 @@ public class GraphParser
 							if (event.asStartElement().getName().getLocalPart().equals(BEGIN)) 
 							{
 								event = eventReader.nextEvent();
-								EdegBegin = Integer.parseInt(event.asCharacters().getData());
+								EdegBegin = new VertexName(Integer.parseInt(event.asCharacters().getData()));
 								continue;
 							}
 							if (event.asStartElement().getName().getLocalPart().equals(END)) 
 							{
 								event = eventReader.nextEvent();
-								EdegEnd = Integer.parseInt(event.asCharacters().getData());
+								EdegEnd = new VertexName(Integer.parseInt(event.asCharacters().getData()));
 								continue;
 							}
 						}
