@@ -2,7 +2,6 @@ package pl.edu.pw.elka.pszt.inteligraph.view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

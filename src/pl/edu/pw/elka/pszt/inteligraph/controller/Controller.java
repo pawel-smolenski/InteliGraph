@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.pszt.inteligraph.controller;
 
+import java.awt.BorderLayout;
 import java.util.Map;
 
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
@@ -8,6 +9,7 @@ import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsHandlersMap;
 import pl.edu.pw.elka.pszt.inteligraph.model.Model;
+import pl.edu.pw.elka.pszt.inteligraph.view.GraphView;
 import pl.edu.pw.elka.pszt.inteligraph.view.View;
 
 public class Controller {
@@ -74,8 +76,8 @@ public class Controller {
 		    
 		    @Override
 		    public void execute() {
-			// TODO Auto-generated method stub
-			
+			model.buildGraph(view.getGraphFile());
+			view.setGraphView(model.getGraph(), null);			
 		    }
 		});
 	}
