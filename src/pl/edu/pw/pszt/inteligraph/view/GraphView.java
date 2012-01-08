@@ -1,19 +1,15 @@
 package pl.edu.pw.pszt.inteligraph.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
-
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.TransformerUtils;
 
 import pl.edu.pw.pszt.inteligraph.Constans;
-
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.layout.StaticLayout;
 import edu.uci.ics.jung.graph.Graph;
@@ -27,7 +23,7 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 public class GraphView {
 
     private Graph graph;
-    private Map map;
+    private Map<Integer, Point2D> map;
     private Transformer<Integer, Point2D> trans;
     private Layout<Integer, String> layout;
     private VisualizationViewer<Integer,String> visualizationViewer;
@@ -43,7 +39,7 @@ public class GraphView {
 	
 	trans = TransformerUtils.mapTransformer(map);
 	
-        layout = new StaticLayout(graph, trans);
+        layout = new StaticLayout<Integer, String>(graph, trans);
         layout.setSize(new Dimension(Constans.WINDOW_WIDTH, Constans.WINDOW_HEIGHT));
         
         visualizationViewer =  new VisualizationViewer<Integer,String>(layout);
@@ -65,9 +61,15 @@ public class GraphView {
 	
     }
     
+    /**
+     * Zwraca widok utworzonego grafu, wraz z obsługą myszki.
+     * @return
+     */
     public VisualizationViewer<Integer, String> getVisualizationViewer() {
 	return visualizationViewer;
     }
+    
+
     
     private Graph createFakeGraph() {
 	Graph<Integer, String> g = new SparseGraph<Integer, String>();
