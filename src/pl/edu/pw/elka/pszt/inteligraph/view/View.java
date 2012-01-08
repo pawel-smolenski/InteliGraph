@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,83 +21,91 @@ import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
  */
 public class View {
 
-    private JFrame f = new JFrame(Constans.APP_NAME);
-    // Menu
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuItemQuit = new JMenuItem("Quit");
-    private JMenuItem menuItemOpen = new JMenuItem("Open");
-    private JMenu menuHelp = new JMenu("Help");
-    private JMenuItem menuItemAbout = new JMenuItem("About");
+	private JFrame f = new JFrame(Constans.APP_NAME);
+	// Menu
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu menuFile = new JMenu("File");
+	private JMenuItem menuItemQuit = new JMenuItem("Quit");
+	private JMenuItem menuItemOpen = new JMenuItem("Open");
+	private JMenu menuHelp = new JMenu("Help");
+	private JMenuItem menuItemAbout = new JMenuItem("About");
 
-    private GraphView graphView;
+	private GraphView graphView;
 
-    /**
-     * Tworzy elementy wyświetlanego okna.
-     * 
-     * @param blockingQueue
-     */
-    public View(EventsBlockingQueue blockingQueue) {
+	/**
+	 * Tworzy elementy wyświetlanego okna.
+	 * 
+	 * @param blockingQueue
+	 */
+	public View(EventsBlockingQueue blockingQueue) {
 
-	f.setJMenuBar(menuBar);
+		f.setJMenuBar(menuBar);
 
-	// menu File
-	menuFile.add(menuItemOpen);
-	menuFile.add(menuItemQuit);
-	// menu About
-	menuHelp.add(menuItemAbout);
-	menuBar.add(menuFile);
-	menuBar.add(menuHelp);
+		// menu File
+		menuFile.add(menuItemOpen);
+		menuFile.add(menuItemQuit);
+		// menu About
+		menuHelp.add(menuItemAbout);
+		menuBar.add(menuFile);
+		menuBar.add(menuHelp);
 
-	f.getContentPane().setLayout(new BorderLayout());
-	f.addWindowListener(new ListenCloseWdw());
-	menuItemQuit.addActionListener(new ListenMenuQuit());
-	menuItemOpen.addActionListener(new ListenMenuOpen());
+		f.getContentPane().setLayout(new BorderLayout());
+		f.addWindowListener(new ListenCloseWdw());
+		menuItemQuit.addActionListener(new ListenMenuQuit());
+		menuItemOpen.addActionListener(new ListenMenuOpen());
 
-	graphView = new GraphView();
+		graphView = new GraphView();
 
-	f.getContentPane().add(graphView.getVisualizationViewer(), BorderLayout.CENTER);
+		f.getContentPane().add(graphView.getVisualizationViewer(),
+				BorderLayout.CENTER);
 
-    }
-
-    /**
-     * Listlener dla opcji "Quit".
-     */
-    public class ListenMenuQuit implements ActionListener {
-	public void actionPerformed(ActionEvent e) {
-	    System.exit(0);
 	}
-    }
 
-    /**
-     * Listlener dla otwierania pliku.
-     */
-    public class ListenMenuOpen implements ActionListener {
-	public void actionPerformed(ActionEvent e) {
-	    System.out.println("Otwieramy pliczek!");
-	    // TODO otwieranie plików tutaj zrobić
-	    
-	    graphView.refresh();
+	/**
+	 * Listlener dla opcji "Quit".
+	 */
+	public class ListenMenuQuit implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
 	}
-    }
 
-    /**
-     * Listlener obsługujący zamykanie okna.
-     */
-    public class ListenCloseWdw extends WindowAdapter {
-	public void windowClosing(WindowEvent e) {
-	    System.exit(0);
+	/**
+	 * Listlener dla otwierania pliku.
+	 */
+	public class ListenMenuOpen implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Otwieramy pliczek!");
+			// TODO otwieranie plików tutaj zrobić
+			JFileChooser fd = new JFileChooser(".");
+
+			int returnVal = fd.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				String fileName = fd.getCurrentDirectory().toString() + "/"+ fd.getSelectedFile().getName();
+				System.out.println(fileName);
+				// graphView = new GraphView(fd.getSelectedFile());
+				graphView.refresh();
+			}
+		}
 	}
-    }
 
-    /**
-     * Wyświetla okno.
-     */
-    public void showWindow() {
-	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	f.setSize(Constans.WINDOW_WIDTH, Constans.WINDOW_HEIGHT);
+	/**
+	 * Listlener obsługujący zamykanie okna.
+	 */
+	public class ListenCloseWdw extends WindowAdapter {
+		public void windowClosing(WindowEvent e) {
+			System.exit(0);
+		}
+	}
 
-	f.setVisible(true);
-    }
+	/**
+	 * Wyświetla okno.
+	 */
+	public void showWindow() {
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(Constans.WINDOW_WIDTH, Constans.WINDOW_HEIGHT);
+
+		f.setVisible(true);
+	}
 
 }
