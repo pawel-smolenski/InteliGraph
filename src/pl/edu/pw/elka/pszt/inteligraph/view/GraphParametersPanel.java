@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.TextArea;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,7 +27,9 @@ public class GraphParametersPanel extends JPanel {
     
     private final int textFieldsWidth = 10;
     
-    
+    private int lambda;
+    private int mi; 
+    private int steps;
     
     public GraphParametersPanel() {
 	super(new FlowLayout());
@@ -39,6 +43,11 @@ public class GraphParametersPanel extends JPanel {
 	infStepButton = new JButton("inf-krok");
 	stopButton = new JButton("Stop");
 	stopButton.setEnabled(false);
+	
+	nStepButton.addActionListener(new ListenNStepButton());
+	infStepButton.addActionListener(new ListenInfStepButton());
+	stopButton.addActionListener(new ListenStopButton());
+	
 	setPreferredSize(new Dimension(Constans.WINDOW_WIDTH, (int)(Constans.WINDOW_HEIGHT*(0.08))));
 	this.add(lambdaLabel);
 	this.add(lambdaField);
@@ -50,6 +59,31 @@ public class GraphParametersPanel extends JPanel {
 	this.add(infStepButton);
 	this.add(stopButton);
     }
+    
+	/**
+	 * Listener dla Buttona n-step.
+	 */
+	public class ListenNStepButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	/**
+	 * Listener dla Buttona inf-step.
+	 */
+	public class ListenInfStepButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	/**
+	 * Listener dla Buttona stop.
+	 */
+	public class ListenStopButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
     
     
 }

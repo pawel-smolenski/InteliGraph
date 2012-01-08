@@ -61,6 +61,7 @@ public class View {
 		f.getContentPane().add(graphView.getVisualizationViewer(),
 				BorderLayout.CENTER);
 		f.getContentPane().add(graphParametersPanel, BorderLayout.NORTH);
+		
 	}
 
 	/**
