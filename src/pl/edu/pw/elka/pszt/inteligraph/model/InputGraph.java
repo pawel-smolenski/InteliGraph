@@ -5,17 +5,17 @@ import edu.uci.ics.jung.graph.SparseGraph;
 
 public class InputGraph 
 {
-	private Graph<Integer, String> g = new SparseGraph<Integer, String>();
+	private Graph<VertexName, String> g = new SparseGraph<VertexName, String>();
 	
-	public void addNewVertex(Integer vertex)
+	public void addNewVertex(VertexName vertex)
 		{
 			g.addVertex(vertex);
 		}
-	public void addNewEdge(String edegName ,Integer begin, Integer end )
+	public void addNewEdge(String edegName ,VertexName begin, VertexName end )
 		{
 			g.addEdge(edegName, begin, end);
 		}
-	public Graph<Integer, String> getGraph()
+	public Graph<VertexName, String> getGraph()
 	{
 		return g;
 	}
