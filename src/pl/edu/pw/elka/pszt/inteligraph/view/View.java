@@ -28,7 +28,8 @@ public class View {
 	private JMenuItem menuItemOpen = new JMenuItem("Open");
 	private JMenu menuHelp = new JMenu("Help");
 	private JMenuItem menuItemAbout = new JMenuItem("About");
-
+	
+	private GraphParametersPanel graphParametersPanel;
 	private GraphView graphView;
 
 	/**
@@ -47,6 +48,8 @@ public class View {
 		menuHelp.add(menuItemAbout);
 		menuBar.add(menuFile);
 		menuBar.add(menuHelp);
+		
+		graphParametersPanel = new GraphParametersPanel();
 
 		f.getContentPane().setLayout(new BorderLayout());
 		f.addWindowListener(new ListenCloseWdw());
@@ -57,7 +60,7 @@ public class View {
 
 		f.getContentPane().add(graphView.getVisualizationViewer(),
 				BorderLayout.CENTER);
-
+		f.getContentPane().add(graphParametersPanel, BorderLayout.NORTH);
 	}
 
 	/**
@@ -74,8 +77,6 @@ public class View {
 	 */
 	public class ListenMenuOpen implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Otwieramy pliczek!");
-			// TODO otwieranie plików tutaj zrobić
 			JFileChooser fd = new JFileChooser(".");
 
 			int returnVal = fd.showOpenDialog(null);
