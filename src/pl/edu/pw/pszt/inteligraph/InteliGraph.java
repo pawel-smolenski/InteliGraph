@@ -17,7 +17,7 @@ public class InteliGraph {
 	View view = new View(blockingQueue);
 	Controller controller = new Controller(model, view, blockingQueue);
 
-	controller.programStart();
+		controller.programStart();
     }
 
 }
