@@ -17,7 +17,6 @@ import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 
 /**
  * Główna klasa tworząca graficzny interfejs użytkownika.
- * 
  */
 public class View {
 
@@ -36,7 +35,7 @@ public class View {
 	/**
 	 * Tworzy elementy wyświetlanego okna.
 	 * 
-	 * @param blockingQueue
+	 * @param blockingQueue kolejka zdarzeń
 	 */
 	public View(EventsBlockingQueue blockingQueue) {
 
@@ -65,7 +64,7 @@ public class View {
 	}
 
 	/**
-	 * Listlener dla opcji "Quit".
+	 * Listener dla opcji "Quit".
 	 */
 	public class ListenMenuQuit implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -74,7 +73,7 @@ public class View {
 	}
 
 	/**
-	 * Listlener dla otwierania pliku.
+	 * Listener dla otwierania pliku.
 	 */
 	public class ListenMenuOpen implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -91,7 +90,7 @@ public class View {
 	}
 
 	/**
-	 * Listlener obsługujący zamykanie okna.
+	 * Listener obsługujący zamykanie okna.
 	 */
 	public class ListenCloseWdw extends WindowAdapter {
 		public void windowClosing(WindowEvent e) {

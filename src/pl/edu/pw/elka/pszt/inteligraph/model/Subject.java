@@ -7,8 +7,9 @@ import java.awt.Point;
  */
 public class Subject {
 	
-	Point point;
-	Deviation deviation;
+	private VertexName vertexName;
+	private Point point;
+	private Deviation deviation;
 	
 	/**
 	 * @param point 
@@ -36,5 +37,15 @@ public class Subject {
 	public Deviation getDeviation() {
 		return deviation;
 	}
+
+	/**
+	 * Zwarca nazwę(numer) wierzchołka
+	 * @return the vertexName
+	 */
+	public VertexName getVertexName() {
+		return vertexName;
+	}
+	
+	
 
 }
