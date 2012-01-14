@@ -74,14 +74,10 @@ public class GraphView {
      * Odświeżanie widoku grafu.
      */
     public void refresh() {
-	SwingUtilities.invokeLater(new Runnable() {
-	    @Override
-	    public void run() {
-		visualizationViewer.updateUI();
-	    }
-	});
-
+	visualizationViewer.updateUI();
     }
+		
+
 
     /**
      * Zwraca widok utworzonego grafu, wraz z dołączoną obsługą myszki.
