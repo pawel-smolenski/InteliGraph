@@ -47,8 +47,8 @@ public class GraphView {
 	// oznaczenia wierzchołków i
 	visualizationViewer.getRenderContext().setVertexLabelTransformer(
 		new ToStringLabeller());
-	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
-		new ToStringLabeller());
+//	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
+//		new ToStringLabeller());
 	// linie proste
 	visualizationViewer.getRenderContext().setEdgeShapeTransformer(
 		new EdgeShape.Line());
