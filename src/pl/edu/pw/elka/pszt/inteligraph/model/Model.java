@@ -86,10 +86,34 @@ public class Model
 		
 		this.currentPopulation = this.generateFirstPopulation(verticies, mi);
 		
+		this.pickBestSubjectCollection();
 		
-		this.bestSubjectCollection = currentPopulation.get(0);
+		
 	}
 	
+	/**
+	 * Wybiera najlepsze rozwiązanie z aktualnej populacji
+	 */
+	private void pickBestSubjectCollection()
+	{
+		for(SubjectCollection solution : this.currentPopulation)
+		{
+			if(this.bestSubjectCollection == null || this.calculateQuality(solution) > this.bestSubjectCollection.getQuality())
+			{
+				this.bestSubjectCollection = solution;
+			}
+		}
+	}
+
+
+	private int calculateQuality(SubjectCollection solution)
+	{
+		// TODO Auto-generated method stub
+		solution.setQuality(1);
+		return 1;
+	}
+
+
 	/**
 	 * @param mi
 	 * @return Pierwsza populacja
@@ -109,20 +133,23 @@ public class Model
 			subjectCollection = new SubjectCollection();
 			
 			//Dla każdego wierzchołka
-			for(VertexName vertex : verticies)
+			do
 			{
-				//Generowanie punktu
-				point = new Point(random.nextInt(800), random.nextInt(600));
-				
-				//Generowanie odchylenia
-				deviation = new Deviation(0.1);
-				
-				//Tworzenie osobnika
-				subject = new Subject(vertex, point, deviation);
-				
-				//Dodawanie osobnika do rozwiązania
-				subjectCollection.add(subject);
-			}
+				for(VertexName vertex : verticies)
+				{
+					//Generowanie punktu
+					point = new Point(random.nextInt(800), random.nextInt(600));
+					
+					//Generowanie odchylenia
+					deviation = new Deviation(0.1);
+					
+					//Tworzenie osobnika
+					subject = new Subject(vertex, point, deviation);
+					
+					//Dodawanie osobnika do rozwiązania
+					subjectCollection.add(subject);
+				}
+			} while(this.calculateQuality(subjectCollection) < 0); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
 			firstPopulation.add(subjectCollection);

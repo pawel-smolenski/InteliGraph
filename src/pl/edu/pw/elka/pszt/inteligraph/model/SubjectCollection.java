@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * Klasa reprezentująca zbiór osobników
  */
+<<<<<<< HEAD
 public class SubjectCollection extends ArrayList<Subject>
 {
 	private Integer quality = null;
@@ -36,4 +37,21 @@ public class SubjectCollection extends ArrayList<Subject>
 	
 	
 
+=======
+public class SubjectCollection extends ArrayList<Subject> {
+	
+	private Integer quality;
+
+	public Integer getQuality()
+	{
+		return quality;
+	}
+
+	public void setQuality(Integer quality)
+	{
+		this.quality = quality;
+	}
+	
+	
+>>>>>>> 1aa77c03ba3e2b99943defce73c2f5291a909622
 }
