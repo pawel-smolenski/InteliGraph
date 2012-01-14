@@ -86,10 +86,35 @@ public class Model
 		
 		this.currentPopulation = this.generateFirstPopulation(verticies, mi);
 		
+		this.pickBestSubjectCollection();
 		
-		this.bestSubjectCollection = currentPopulation.get(0);
+		
 	}
 	
+	/**
+	 * Wybiera najlepsze rozwiązanie z aktualnej populacji
+	 */
+	private void pickBestSubjectCollection()
+	{
+		this.bestSubjectCollection = currentPopulation.get(0);
+
+		for(SubjectCollection solution : this.currentPopulation)
+		{
+			if(this.calculateQuality(solution) > this.bestSubjectCollection.getQuality())
+			{
+				this.bestSubjectCollection = solution;
+			}
+		}
+	}
+
+
+	private int calculateQuality(SubjectCollection solution)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 	/**
 	 * @param mi
 	 * @return Pierwsza populacja
