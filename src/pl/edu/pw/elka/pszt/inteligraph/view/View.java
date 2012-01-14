@@ -41,6 +41,7 @@ public class View {
     private GraphParametersPanel graphParametersPanel;
     private StatusBar statusBar;
     private GraphView graphView;
+    private int graphViewIndex = 117;
 
     private EventsBlockingQueue blockingQueue;
 
@@ -77,13 +78,20 @@ public class View {
 	f.getContentPane().add(graphParametersPanel, BorderLayout.NORTH);
 	f.getContentPane().add(statusBar, BorderLayout.SOUTH);
 
-    }
 
-    public void setGraphView(Graph<VertexName, String> g,
-	    Map<VertexName, Point2D> m) {
+    }
+    
+    /**
+     * Ustawia nowy graf, odświeża widok.
+     * @param g
+     * @param m
+     */
+    public void setGraphView(Graph<VertexName, String> g, Map<VertexName, Point2D> m) {
 	graphView = new GraphView(g, m);
-	f.getContentPane().add(graphView.getVisualizationViewer(),
-		BorderLayout.CENTER);
+	f.getContentPane().removeAll();
+	f.getContentPane().add(graphParametersPanel, BorderLayout.NORTH);
+	f.getContentPane().add(statusBar, BorderLayout.SOUTH);
+	f.getContentPane().add(graphView.getVisualizationViewer(), BorderLayout.CENTER);
 	graphView.refresh();
     }
     

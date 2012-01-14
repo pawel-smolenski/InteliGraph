@@ -6,6 +6,8 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.TransformerUtils;
 
@@ -32,9 +34,15 @@ public class GraphView {
     private DefaultModalGraphMouse<Object, Object> graphMouse;
 
     public GraphView(Graph<VertexName, String> g, Map<VertexName, Point2D> m) {
+	if (graph != null)
+        	if (graph.equals(g)) {
+        	    System.out.println("Dziadyga taki sam jest!");
+        	}
 	graph = g;
 	map = m;
 
+
+	
 	trans = TransformerUtils.mapTransformer(map);
 
 	layout = new StaticLayout<VertexName, String>(graph, trans);
@@ -46,7 +54,7 @@ public class GraphView {
 
 	// oznaczenia wierzchołków 
 	visualizationViewer.getRenderContext().setVertexLabelTransformer(
-		new ToStringLabeller());
+		new ToStringLabeller<VertexName>());
 	// nazwy krawędzi
 //	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
 //		new ToStringLabeller());
@@ -61,17 +69,18 @@ public class GraphView {
 
     }
 
-    public void setGraphMapData(Graph<VertexName, String> g,
-	    Map<VertexName, Point2D> m) {
-	graph = g;
-	map = m;
-    }
 
     /**
      * Odświeżanie widoku grafu.
      */
     public void refresh() {
-	visualizationViewer.updateUI();
+	SwingUtilities.invokeLater(new Runnable() {
+	    @Override
+	    public void run() {
+		visualizationViewer.updateUI();
+	    }
+	});
+
     }
 
     /**

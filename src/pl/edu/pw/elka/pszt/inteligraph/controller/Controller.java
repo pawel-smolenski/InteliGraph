@@ -1,9 +1,6 @@
 package pl.edu.pw.elka.pszt.inteligraph.controller;
 
-import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.util.Collection;
-import java.util.Random;
+import javax.swing.SwingUtilities;
 
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
@@ -11,9 +8,7 @@ import pl.edu.pw.elka.pszt.inteligraph.events.EventHandler;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsHandlersMap;
-import pl.edu.pw.elka.pszt.inteligraph.model.Arrangement;
 import pl.edu.pw.elka.pszt.inteligraph.model.Model;
-import pl.edu.pw.elka.pszt.inteligraph.model.VertexName;
 import pl.edu.pw.elka.pszt.inteligraph.view.View;
 
 public class Controller {
@@ -48,16 +43,27 @@ public class Controller {
 			public void execute() {
 				view.showWindow();
 				view.getGraphParametersPanel().setStopButtonActive(false);
+				view.getGraphParametersPanel().setStepsButtonActive(false);
+				view.getStatusBar().setAppState("...");
 			}
 		});
 		
 		eventHandlers.put(EventName.DRAW_GRAPH_N, new EventHandler() {
-		    
+
 		    @Override
 		    public void execute() {
-			view.getGraphParametersPanel().setStopButtonActive(true);
-			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
-			view.getStatusBar().setAppState(Constans.STATE_COMPUTING);
+			if (model.getGraph() != null) {
+        			SwingUtilities.invokeLater(new Runnable() {
+        			    @Override
+        			    public void run() {
+        				view.getGraphParametersPanel().setStopButtonActive(true);
+        				view.getGraphParametersPanel().setStepsButtonActive(false);
+                			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
+                			view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroków...");
+        			    }
+        			});
+
+			}
 		    }
 		});
 		
@@ -65,9 +71,17 @@ public class Controller {
 		    
 		    @Override
 		    public void execute() {
-			view.getGraphParametersPanel().setStopButtonActive(true);
-			model.calculateVerticesPositions(view.getMi(), view.getLambda());	
-			view.getStatusBar().setAppState(Constans.STATE_COMPUTING);
+			if (model.getGraph() != null) {
+        			SwingUtilities.invokeLater(new Runnable() {
+        			    @Override
+        			    public void run() {
+        				view.getGraphParametersPanel().setStopButtonActive(true);
+        				view.getGraphParametersPanel().setStepsButtonActive(false);
+                			model.calculateVerticesPositions(view.getMi(), view.getLambda());	
+                			view.getStatusBar().setAppState("Liczę dla ∞ kroków...");
+        			    }
+        			});
+			}
 		    }
 		});
 		
@@ -75,11 +89,18 @@ public class Controller {
 		    
 		    @Override
 		    public void execute() {
-			view.getGraphParametersPanel().setStopButtonActive(false);
 			model.stopCalculations();
 			model.getEvolutionSteps();
-			view.getStatusBar().setAppState(Constans.STATE_COMPUTING_ENDED);
-			view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps());
+			
+			SwingUtilities.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+				view.getGraphParametersPanel().setStopButtonActive(false);
+				view.getGraphParametersPanel().setStepsButtonActive(true);
+				view.getStatusBar().setAppState(Constans.STATE_COMPUTING_ENDED);
+				view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps());
+			    }
+			});
 		    }
 		});
 		eventHandlers.put(EventName.CHOOSE_FILE, new EventHandler() {
@@ -87,11 +108,16 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
-<<<<<<< HEAD
-			view.setGraphView(model.getGraph(), null);
-			view.getGraphParametersPanel().setStopButtonActive(false);
-			view.getStatusBar().setAppState(view.getGraphFile().getAbsolutePath());
-=======
+			SwingUtilities.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+				view.getGraphParametersPanel().setStopButtonActive(false);
+				view.getGraphParametersPanel().setStepsButtonActive(true);
+				view.getStatusBar().setAppState("Otworzono: " + view.getGraphFile().getName());
+				view.getStatusBar().setGraphParams(model.getGraph().getVertexCount(), model.getGraph().getEdgeCount());
+			    }
+			});
+
 			model.calculateVerticesPositions(5, 10);
 			try
 			{
@@ -102,8 +128,6 @@ public class Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
->>>>>>> a5a5772057b94fbd3a93dc11d892903827bb3f33
 		    }
 		    
 		});
