@@ -11,22 +11,22 @@ public enum EventName {
     	SHOW_EMPTY_WINDOW,
 	
 	/**
-	 * 
+	 * Rysuj graf wykonując obliczenia dla n-kroków.
 	 */
 	DRAW_GRAPH_N,
 	
 	/**
-	 * 
+	 * Rysuj graf dopóki nie znaleziono najlepszego lub nie naciśnięto stop.
 	 */
 	DRAW_GRAPH_INF,
 	
 	/**
-	 * 
+	 * Naciśnięto stop.
 	 */
 	DRAW_GRAPH_STOP,
 	
 	/**
-	 * 
+	 * Obsługa wczytania pliku.
 	 */
 	CHOOSE_FILE,
 }

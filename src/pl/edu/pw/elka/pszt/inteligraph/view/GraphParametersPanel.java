@@ -54,7 +54,7 @@ public class GraphParametersPanel extends JPanel {
 	stopButton.addActionListener(new ListenStopButton());
 
 	setPreferredSize(new Dimension(Constans.WINDOW_WIDTH,
-		(int) (Constans.WINDOW_HEIGHT * (0.08))));
+		Constans.PANEL_HEIGHT));
 	this.add(lambdaLabel);
 	this.add(lambdaField);
 	this.add(miLabel);
@@ -108,6 +108,24 @@ public class GraphParametersPanel extends JPanel {
 	public void actionPerformed(ActionEvent e) {
 	    blockingQueue.add(new Event(EventName.DRAW_GRAPH_STOP));
 	}
+    }
+
+    /**
+     * Zwraca parametry dla algorytmu.
+     * @return tablica parametrów 
+     */
+    public int[] getAlgorithmParams() {
+	int[] ret = {mi, lambda, steps};
+	return ret;
+    }
+
+
+    /**
+     * Włącza i wyłącza stopButton.
+     * @param value TRUE jak włączony.
+     */
+    public void setStopButtonActive(boolean value) {
+	stopButton.setEnabled(value);
     }
 
 }

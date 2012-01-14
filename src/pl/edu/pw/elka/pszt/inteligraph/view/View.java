@@ -39,6 +39,7 @@ public class View {
     private JMenuItem menuItemAbout = new JMenuItem("About");
 
     private GraphParametersPanel graphParametersPanel;
+    private StatusBar statusBar;
     private GraphView graphView;
 
     private EventsBlockingQueue blockingQueue;
@@ -65,6 +66,7 @@ public class View {
 	menuBar.add(menuFile);
 	menuBar.add(menuHelp);
 
+	statusBar = new StatusBar(blockingQueue);
 	graphParametersPanel = new GraphParametersPanel(blockingQueue);
 
 	f.getContentPane().setLayout(new BorderLayout());
@@ -73,6 +75,7 @@ public class View {
 	menuItemOpen.addActionListener(new ListenMenuOpen());
 
 	f.getContentPane().add(graphParametersPanel, BorderLayout.NORTH);
+	f.getContentPane().add(statusBar, BorderLayout.SOUTH);
 
     }
 
@@ -83,7 +86,28 @@ public class View {
 		BorderLayout.CENTER);
 	graphView.refresh();
     }
+    
+    
+    public GraphParametersPanel getGraphParametersPanel() {
+	return graphParametersPanel;
+    }
+    
+    public StatusBar getStatusBar() {
+	return statusBar;
+    }
 
+    public int getMi(){
+	return graphParametersPanel.getAlgorithmParams()[0];
+    }
+    
+    public int getLambda(){
+	return graphParametersPanel.getAlgorithmParams()[1];
+    }
+    
+    public int getSteps(){
+	return graphParametersPanel.getAlgorithmParams()[2];
+    }
+    
     /**
      * Listener dla opcji "Quit".
      */
@@ -92,7 +116,7 @@ public class View {
 	    System.exit(0);
 	}
     }
-
+    
     /**
      * Listener dla otwierania pliku.
      */

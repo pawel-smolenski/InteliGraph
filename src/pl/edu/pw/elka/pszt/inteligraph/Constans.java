@@ -7,12 +7,32 @@ public class Constans {
     public static final String APP_NAME = "InteliGraph";
     
     /**
-     * Wysokość okna.
+     * Szerokość okna.
      */
     public static int WINDOW_WIDTH = 800;
     
     /**
-     * Szereokość okna.
+     * Wysokość okna.
      */
     public static int WINDOW_HEIGHT = 600; 
+    
+    /**
+     * Wysokość panelu.
+     */
+    public static int PANEL_HEIGHT = 48;
+    
+    /**
+     * Wysokość statusBar.
+     */
+    public static int BAR_HEIGHT = 20;
+    
+    /**
+     * Komunikat o liczeniu pozycji wierzchołków grafu.
+     */
+    public static String STATE_COMPUTING = "Liczę...";
+    
+    /**
+     * Komunikat o skończeniu liczenia pozycji wierzchołków grafu.
+     */
+    public static String STATE_COMPUTING_ENDED = "Skończyłem liczyć.";
 }

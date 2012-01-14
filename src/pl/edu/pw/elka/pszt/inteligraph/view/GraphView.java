@@ -44,11 +44,12 @@ public class GraphView {
 
 	visualizationViewer = new VisualizationViewer<VertexName, String>(layout);
 
-	// oznaczenia wierzchołków i
+	// oznaczenia wierzchołków 
 	visualizationViewer.getRenderContext().setVertexLabelTransformer(
 		new ToStringLabeller());
-	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
-		new ToStringLabeller());
+	// nazwy krawędzi
+//	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
+//		new ToStringLabeller());
 	// linie proste
 	visualizationViewer.getRenderContext().setEdgeShapeTransformer(
 		new EdgeShape.Line());

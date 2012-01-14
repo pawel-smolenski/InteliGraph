@@ -14,6 +14,11 @@ public class Model
 	private EventsBlockingQueue blockingQueue;
 	
 	/**
+	 * Ilość iteracji wykonana przez algorytm ewolucyjny;
+	 */
+	private int evolutionSteps = 0;
+	
+	/**
 	 * Przechowuje logiczny model grafu
 	 */
 	private Graph<VertexName, String> graph;
@@ -120,4 +125,11 @@ public class Model
 	{
 		
 	}
+
+
+	public int getEvolutionSteps() {
+	    return evolutionSteps;
+	}
+	
+	
 }

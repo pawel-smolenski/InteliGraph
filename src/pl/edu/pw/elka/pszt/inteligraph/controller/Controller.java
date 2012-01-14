@@ -3,6 +3,7 @@ package pl.edu.pw.elka.pszt.inteligraph.controller;
 import java.awt.BorderLayout;
 import java.util.Map;
 
+import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventHandler;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
@@ -43,6 +44,7 @@ public class Controller {
 			@Override
 			public void execute() {
 				view.showWindow();
+				view.getGraphParametersPanel().setStopButtonActive(false);
 			}
 		});
 		
@@ -50,8 +52,9 @@ public class Controller {
 		    
 		    @Override
 		    public void execute() {
-			// TODO Auto-generated method stub
-			
+			view.getGraphParametersPanel().setStopButtonActive(true);
+			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
+			view.getStatusBar().setAppState(Constans.STATE_COMPUTING);
 		    }
 		});
 		
@@ -59,8 +62,9 @@ public class Controller {
 		    
 		    @Override
 		    public void execute() {
-			// TODO Auto-generated method stub
-			
+			view.getGraphParametersPanel().setStopButtonActive(true);
+			model.calculateVerticesPositions(view.getMi(), view.getLambda());	
+			view.getStatusBar().setAppState(Constans.STATE_COMPUTING);
 		    }
 		});
 		
@@ -68,8 +72,11 @@ public class Controller {
 		    
 		    @Override
 		    public void execute() {
-			// TODO Auto-generated method stub
-			
+			view.getGraphParametersPanel().setStopButtonActive(false);
+			model.stopCalculations();
+			model.getEvolutionSteps();
+			view.getStatusBar().setAppState(Constans.STATE_COMPUTING_ENDED);
+			view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps());
 		    }
 		});
 		eventHandlers.put(EventName.CHOOSE_FILE, new EventHandler() {
@@ -77,7 +84,9 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
-			view.setGraphView(model.getGraph(), null);			
+			view.setGraphView(model.getGraph(), null);
+			view.getGraphParametersPanel().setStopButtonActive(false);
+			view.getStatusBar().setAppState(view.getGraphFile().getAbsolutePath());
 		    }
 		});
 	}
