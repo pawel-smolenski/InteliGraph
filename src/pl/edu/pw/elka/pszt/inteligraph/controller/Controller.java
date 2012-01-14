@@ -108,6 +108,7 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
+
 			SwingUtilities.invokeLater(new Runnable() {
 			    @Override
 			    public void run() {
@@ -129,7 +130,6 @@ public class Controller {
 				e.printStackTrace();
 			}
 		    }
-		    
 		});
 	}
 
