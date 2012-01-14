@@ -26,13 +26,11 @@ public class Constans {
      */
     public static int BAR_HEIGHT = 20;
     
-    /**
-     * Komunikat o liczeniu pozycji wierzchołków grafu.
-     */
-    public static String STATE_COMPUTING = "Liczę...";
-    
+   
     /**
      * Komunikat o skończeniu liczenia pozycji wierzchołków grafu.
      */
     public static String STATE_COMPUTING_ENDED = "Skończyłem liczyć.";
+    
+
 }

@@ -31,9 +31,9 @@ public class GraphParametersPanel extends JPanel {
 
     private final int textFieldsWidth = 10;
 
-    private int lambda = 0;
-    private int mi = 0 ;
-    private int steps = 0;
+    private int lambda = 5;
+    private int mi = 10;
+    private int steps = 1;
 
     public GraphParametersPanel(EventsBlockingQueue blockingQueue) {
 	super(new FlowLayout());
@@ -43,11 +43,13 @@ public class GraphParametersPanel extends JPanel {
 	stepsField = new TextField(String.valueOf(steps), textFieldsWidth);
 	lambdaLabel = new JLabel(" λ:");
 	miLabel = new JLabel(" μ:");
-	stepsLabel = new JLabel(" kroki:");
+	stepsLabel = new JLabel(" n:");
 	nStepButton = new JButton("n-krok");
-	infStepButton = new JButton("inf-krok");
+	infStepButton = new JButton("∞-krok");
 	stopButton = new JButton("Stop");
 	stopButton.setEnabled(false);
+	nStepButton.setEnabled(false);
+	infStepButton.setEnabled(false);
 
 	nStepButton.addActionListener(new ListenNStepButton());
 	infStepButton.addActionListener(new ListenInfStepButton());
@@ -75,7 +77,7 @@ public class GraphParametersPanel extends JPanel {
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
-		blockingQueue.add(new Event(EventName.DRAW_GRAPH_INF));
+		blockingQueue.add(new Event(EventName.DRAW_GRAPH_N));
 	    } catch (NumberFormatException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
@@ -126,6 +128,15 @@ public class GraphParametersPanel extends JPanel {
      */
     public void setStopButtonActive(boolean value) {
 	stopButton.setEnabled(value);
+    }
+    
+    /**
+     * Włącza i wyłącza buttony do liczenia
+     * @param value TRUE jak włączony.
+     */
+    public void setStepsButtonActive(boolean value) {
+	nStepButton.setEnabled(value);
+	infStepButton.setEnabled(value);
     }
 
 }

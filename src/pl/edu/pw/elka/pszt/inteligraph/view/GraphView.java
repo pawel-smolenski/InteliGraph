@@ -6,6 +6,8 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.TransformerUtils;
 
@@ -46,7 +48,7 @@ public class GraphView {
 
 	// oznaczenia wierzchołków 
 	visualizationViewer.getRenderContext().setVertexLabelTransformer(
-		new ToStringLabeller());
+		new ToStringLabeller<VertexName>());
 	// nazwy krawędzi
 //	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
 //		new ToStringLabeller());
@@ -61,11 +63,6 @@ public class GraphView {
 
     }
 
-    public void setGraphMapData(Graph<VertexName, String> g,
-	    Map<VertexName, Point2D> m) {
-	graph = g;
-	map = m;
-    }
 
     /**
      * Odświeżanie widoku grafu.
@@ -73,6 +70,8 @@ public class GraphView {
     public void refresh() {
 	visualizationViewer.updateUI();
     }
+		
+
 
     /**
      * Zwraca widok utworzonego grafu, wraz z dołączoną obsługą myszki.

@@ -1,7 +1,9 @@
 package pl.edu.pw.elka.pszt.inteligraph.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,15 +17,21 @@ public class StatusBar extends JPanel {
     private String appStateString;
     
     private JLabel evolutionStepsLabel;
+    private JLabel graphVerticesLabel;
+    private JLabel graphEdgesLabel;
     
     public StatusBar(EventsBlockingQueue blockingQueue) {
-	super(new FlowLayout());
+	super(new GridLayout(1, 4));
 	setPreferredSize(new Dimension(Constans.WINDOW_WIDTH, Constans.BAR_HEIGHT));
 	appStateLabel = new JLabel(appStateString);
 	evolutionStepsLabel = new JLabel("Liczba kroków: 0");
-	
+	graphEdgesLabel = new JLabel();
+	graphVerticesLabel = new JLabel();
+
 	this.add(appStateLabel);
 	this.add(evolutionStepsLabel);
+	this.add(graphVerticesLabel);
+	this.add(graphEdgesLabel);
     }
     
     public void setAppState(String string) {
@@ -33,6 +41,12 @@ public class StatusBar extends JPanel {
     
     public void setEvolutionSteps(int steps) {
 	evolutionStepsLabel.setText("Liczba kroków: " + steps);
+	this.updateUI();
+    }
+    
+    public void setGraphParams(int vertices, int edges) {
+	graphVerticesLabel.setText("wierzchołki: " + vertices);
+	graphEdgesLabel.setText("krawędzie: " + edges);
 	this.updateUI();
     }
 }
