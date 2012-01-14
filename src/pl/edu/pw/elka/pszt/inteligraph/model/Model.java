@@ -109,20 +109,23 @@ public class Model
 			subjectCollection = new SubjectCollection();
 			
 			//Dla każdego wierzchołka
-			for(VertexName vertex : verticies)
+			do
 			{
-				//Generowanie punktu
-				point = new Point(random.nextInt(800), random.nextInt(600));
-				
-				//Generowanie odchylenia
-				deviation = new Deviation(0.1);
-				
-				//Tworzenie osobnika
-				subject = new Subject(vertex, point, deviation);
-				
-				//Dodawanie osobnika do rozwiązania
-				subjectCollection.add(subject);
-			}
+				for(VertexName vertex : verticies)
+				{
+					//Generowanie punktu
+					point = new Point(random.nextInt(800), random.nextInt(600));
+					
+					//Generowanie odchylenia
+					deviation = new Deviation(0.1);
+					
+					//Tworzenie osobnika
+					subject = new Subject(vertex, point, deviation);
+					
+					//Dodawanie osobnika do rozwiązania
+					subjectCollection.add(subject);
+				}
+			} while(false); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
 			firstPopulation.add(subjectCollection);
