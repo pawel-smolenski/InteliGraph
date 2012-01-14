@@ -13,4 +13,13 @@ public class Deviation {
 	public Deviation(double deviation) {
 		this.deviation = deviation;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Deviation [deviation=" + deviation + "]";
+	}
+	
+	
+	
 }

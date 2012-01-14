@@ -1,15 +1,18 @@
 package pl.edu.pw.elka.pszt.inteligraph.controller;
 
-import java.awt.BorderLayout;
-import java.util.Map;
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.Collection;
+import java.util.Random;
 
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventHandler;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsHandlersMap;
+import pl.edu.pw.elka.pszt.inteligraph.model.Arrangement;
 import pl.edu.pw.elka.pszt.inteligraph.model.Model;
-import pl.edu.pw.elka.pszt.inteligraph.view.GraphView;
+import pl.edu.pw.elka.pszt.inteligraph.model.VertexName;
 import pl.edu.pw.elka.pszt.inteligraph.view.View;
 
 public class Controller {
@@ -77,8 +80,19 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
-			view.setGraphView(model.getGraph(), null);			
+			model.calculateVerticesPositions(5, 10);
+			try
+			{
+				//model.getBestArrangement();
+				view.setGraphView(model.getGraph(), model.getBestArrangement());
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		    }
+		    
 		});
 	}
 
