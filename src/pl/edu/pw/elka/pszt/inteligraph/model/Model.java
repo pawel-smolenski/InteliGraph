@@ -2,6 +2,7 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.awt.Point;
 import java.io.File;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Random;
 
@@ -172,6 +173,7 @@ public class Model
 		Point point;
 		Deviation deviation;
 		Subject subject;
+		int seed;
 		
 		//Generowanie "mi" losowych rozwiązań(SubjectCollections)
 		for(int i=0; i < mi; i++)
@@ -183,8 +185,10 @@ public class Model
 			{
 				for(VertexName vertex : verticies)
 				{
+					seed = (int) System.currentTimeMillis() % 600;
+					
 					//Generowanie punktu
-					point = new Point(random.nextInt(800), random.nextInt(600));
+					point = new Point((random.nextInt(800)+seed)%800, (random.nextInt(600)+seed)%600);
 					
 					//Generowanie odchylenia
 					deviation = new Deviation(0.1);
