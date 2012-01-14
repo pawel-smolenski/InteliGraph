@@ -5,7 +5,10 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Random;
 
+import javax.swing.SwingUtilities;
+
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
+import sun.awt.windows.ThemeReader;
 import sun.security.provider.certpath.Vertex;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
@@ -20,19 +23,29 @@ public class Model
 	private int evolutionSteps = 0;
 	
 	/**
-	 * Przechowuje logiczny model grafu
+	 * Logiczny model grafu
 	 */
 	private Graph<VertexName, String> graph;
 	
+	/**
+	 * Aktualna populacja
+	 */
 	private Population currentPopulation;
+	
+	/**
+	 * Najlepsze uzyskane rozwiązanie
+	 */
 	private SubjectCollection bestSubjectCollection;
+	
+	/**
+	 * Wątek przeprowadzający obliczenia
+	 */
+	private Thread calculationThread;
 	
 	public Model(EventsBlockingQueue blockingQueue)
 	{
 		this.blockingQueue = blockingQueue;
-		this.graph = new SparseGraph<VertexName, String>();
-	}
-	
+	}	
 	
 	/**
 	 * @return Graf
@@ -42,12 +55,25 @@ public class Model
 		return graph;
 	}
 
+	/**
+	 * @return liczba przebytych kroków algorytmu
+	 */
+	public int getEvolutionSteps() {
+	    return evolutionSteps;
+	}
+
+
+	/**
+	 * Buduje graf na podstawie informacji z pliku XML
+	 * @param xmlFile plik xml z definicją grafu
+	 */
 	public void buildGraph(File xmlFile)
 	{
 		GraphParser read = new GraphParser();
 		InputGraph readConfig = read.readXmlGraph(xmlFile);
 		graph = readConfig.getGraph();
 	}
+
 
 	/**
 	 * @return Najlepsze uzyskane rozmieszczenie 
@@ -68,6 +94,7 @@ public class Model
 		return arrangement;
 	}
 
+
 	/**
 	 * Funkcja realizująca strategię ewolucyjną mi+labda.
 	 * 
@@ -75,12 +102,13 @@ public class Model
 	 * @param lambda 
 	 * @param iterations Liczba iteracji, po której algorytm ma się zakończyć
 	 */
-	public void calculateVerticesPositions(Integer mi, Integer lambda, Integer iterations)
+	public void calculateVerticesPositions(Integer mi, Integer lambda, final Integer evolutionStepsToDo)
 	{
 		SubjectCollection subjectCollection;
 		Subject subject;
 		Point point;
 		Deviation deviation;
+		Population temporaryPopulation;
 		
 		Collection<VertexName> verticies = this.graph.getVertices();
 		
@@ -88,9 +116,22 @@ public class Model
 		
 		this.pickBestSubjectCollection();
 		
-		
+		this.calculationThread = new Thread(new Runnable()
+		{
+			
+			@Override
+			public void run()
+			{
+				do
+				{
+					//algorytm ewolucyjny
+				}while(evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo);
+				
+			}
+		});
 	}
-	
+
+
 	/**
 	 * Wybiera najlepsze rozwiązanie z aktualnej populacji
 	 */
@@ -106,7 +147,12 @@ public class Model
 	}
 
 
-	private int calculateQuality(SubjectCollection solution)
+	/**
+	 * Oblicza jakość rozwiązania pod wzglądem spełnienia kryteriów
+	 * @param solution
+	 * @return jakośc rozwiązania
+	 */
+	private Integer calculateQuality(SubjectCollection solution)
 	{
 		// TODO Auto-generated method stub
 		solution.setQuality(1);
@@ -169,11 +215,6 @@ public class Model
 	public void stopCalculations()
 	{
 		
-	}
-
-
-	public int getEvolutionSteps() {
-	    return evolutionSteps;
 	}
 	
 	
