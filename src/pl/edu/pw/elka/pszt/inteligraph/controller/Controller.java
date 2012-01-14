@@ -87,11 +87,9 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
-<<<<<<< HEAD
-			view.setGraphView(model.getGraph(), null);
 			view.getGraphParametersPanel().setStopButtonActive(false);
 			view.getStatusBar().setAppState(view.getGraphFile().getAbsolutePath());
-=======
+			
 			model.calculateVerticesPositions(5, 10);
 			try
 			{
@@ -103,7 +101,6 @@ public class Controller {
 				e.printStackTrace();
 			}
 			
->>>>>>> a5a5772057b94fbd3a93dc11d892903827bb3f33
 		    }
 		    
 		});
