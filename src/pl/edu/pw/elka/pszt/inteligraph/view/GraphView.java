@@ -34,15 +34,9 @@ public class GraphView {
     private DefaultModalGraphMouse<Object, Object> graphMouse;
 
     public GraphView(Graph<VertexName, String> g, Map<VertexName, Point2D> m) {
-	if (graph != null)
-        	if (graph.equals(g)) {
-        	    System.out.println("Dziadyga taki sam jest!");
-        	}
 	graph = g;
 	map = m;
 
-
-	
 	trans = TransformerUtils.mapTransformer(map);
 
 	layout = new StaticLayout<VertexName, String>(graph, trans);

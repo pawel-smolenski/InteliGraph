@@ -118,7 +118,7 @@ public class Controller {
 				view.getStatusBar().setGraphParams(model.getGraph().getVertexCount(), model.getGraph().getEdgeCount());
 			    }
 			});
-
+			
 			model.calculateVerticesPositions(5, 10);
 			try
 			{
