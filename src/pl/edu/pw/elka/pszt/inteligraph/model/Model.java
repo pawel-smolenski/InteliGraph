@@ -139,7 +139,7 @@ public class Model
 	{
 		for(SubjectCollection solution : this.currentPopulation)
 		{
-			if(this.bestSubjectCollection == null || this.calculateQuality(solution) > this.bestSubjectCollection.getQuality())
+			if(this.bestSubjectCollection == null || this.calculateQuality(solution) >= this.bestSubjectCollection.getQuality())
 			{
 				this.bestSubjectCollection = solution;
 			}
