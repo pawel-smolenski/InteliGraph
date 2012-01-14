@@ -96,11 +96,9 @@ public class Model
 	 */
 	private void pickBestSubjectCollection()
 	{
-		this.bestSubjectCollection = currentPopulation.get(0);
-
 		for(SubjectCollection solution : this.currentPopulation)
 		{
-			if(this.calculateQuality(solution) > this.bestSubjectCollection.getQuality())
+			if(this.bestSubjectCollection == null || this.calculateQuality(solution) > this.bestSubjectCollection.getQuality())
 			{
 				this.bestSubjectCollection = solution;
 			}
@@ -111,7 +109,8 @@ public class Model
 	private int calculateQuality(SubjectCollection solution)
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		solution.setQuality(1);
+		return 1;
 	}
 
 
@@ -150,7 +149,7 @@ public class Model
 					//Dodawanie osobnika do rozwiązania
 					subjectCollection.add(subject);
 				}
-			} while(false); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
+			} while(this.calculateQuality(subjectCollection) < 0); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
 			firstPopulation.add(subjectCollection);
