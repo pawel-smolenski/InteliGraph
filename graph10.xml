@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph>
+	<vertex>1</vertex>
+	<vertex>2</vertex>
+	<vertex>3</vertex>
+	<vertex>4</vertex>
+	<vertex>5</vertex>
+	<vertex>6</vertex>
+	<vertex>7</vertex>
+	<vertex>8</vertex>
+	<vertex>9</vertex>
+	<vertex>10</vertex>
+	<edeg>
+		<name> Połączenie 1-2 </name>
+		<begin>1</begin>
+		<end>2</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 2-3 </name>
+		<begin>2</begin>
+		<end>3</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 3-1 </name>
+		<begin>3</begin>
+		<end>1</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 zczaqw</name>
+		<begin>4</begin>
+		<end>2</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 jujyu</name>
+		<begin>5</begin>
+		<end>2</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 nbvnbv</name>
+		<begin>4</begin>
+		<end>10</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 xzvxv</name>
+		<begin>10</begin>
+		<end>9</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 weqwe</name>
+		<begin>5</begin>
+		<end>1</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 dsfdsd</name>
+		<begin>6</begin>
+		<end>3</end>
+	</edeg>
+	<edeg>
+		<name> Połączenie 4-2 adsdasd</name>
+		<begin>7</begin>
+		<end>10</end>
+	</edeg>
+	<edeg>
+		<name> Połączeasdnie 4-2 adsdasd</name>
+		<begin>8</begin>
+		<end>7</end>
+	</edeg>
+</graph>

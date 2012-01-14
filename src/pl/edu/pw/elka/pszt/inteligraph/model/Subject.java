@@ -12,12 +12,14 @@ public class Subject {
 	private Deviation deviation;
 	
 	/**
+	 * @param vertex 
 	 * @param point 
 	 * 		współrzędne środka wierzchołka 
 	 * @param deviation
 	 * 		odchylenie standardowe
 	 */
-	public Subject(Point point, Deviation deviation) {
+	public Subject(VertexName vertex, Point point, Deviation deviation) {
+		this.vertexName = vertex;
 		this.point = point;
 		this.deviation = deviation;
 	}

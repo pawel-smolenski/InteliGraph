@@ -37,8 +37,8 @@ public class GraphView {
 
 	trans = TransformerUtils.mapTransformer(map);
 
-//	layout = new StaticLayout<VertexName, String>(graph, trans);
-	layout = new CircleLayout<VertexName, String>(graph);
+	layout = new StaticLayout<VertexName, String>(graph, trans);
+	//layout = new CircleLayout<VertexName, String>(graph);
 	layout.setSize(new Dimension(Constans.WINDOW_WIDTH,
 		Constans.WINDOW_HEIGHT));
 

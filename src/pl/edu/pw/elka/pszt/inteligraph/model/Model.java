@@ -3,6 +3,7 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 import java.awt.Point;
 import java.io.File;
 import java.util.Collection;
+import java.util.Random;
 
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import sun.security.provider.certpath.Vertex;
@@ -23,6 +24,7 @@ public class Model
 	 */
 	private Graph<VertexName, String> graph;
 	
+	private Population currentPopulation;
 	private SubjectCollection bestSubjectCollection;
 	
 	public Model(EventsBlockingQueue blockingQueue)
@@ -75,7 +77,6 @@ public class Model
 	 */
 	public void calculateVerticesPositions(Integer mi, Integer lambda, Integer iterations)
 	{
-		Population basePopulation = new Population();
 		SubjectCollection subjectCollection;
 		Subject subject;
 		Point point;
@@ -83,8 +84,10 @@ public class Model
 		
 		Collection<VertexName> verticies = this.graph.getVertices();
 		
-		basePopulation = this.generateFirstPopulation(verticies, mi);
+		this.currentPopulation = this.generateFirstPopulation(verticies, mi);
 		
+		
+		this.bestSubjectCollection = currentPopulation.get(0);
 	}
 	
 	/**
@@ -93,21 +96,36 @@ public class Model
 	 */
 	private Population generateFirstPopulation(Collection<VertexName> verticies, Integer mi)
 	{
-		Population firstPopulation = null;
+		Random random = new Random();
+		Population firstPopulation = new Population();
+		SubjectCollection subjectCollection;
+		Point point;
+		Deviation deviation;
+		Subject subject;
 		
 		//Generowanie "mi" losowych rozwiązań(SubjectCollections)
 		for(int i=0; i < mi; i++)
 		{
+			subjectCollection = new SubjectCollection();
+			
 			//Dla każdego wierzchołka
 			for(VertexName vertex : verticies)
 			{
 				//Generowanie punktu
+				point = new Point(random.nextInt(800), random.nextInt(600));
+				
 				//Generowanie odchylenia
+				deviation = new Deviation(0.1);
+				
 				//Tworzenie osobnika
+				subject = new Subject(vertex, point, deviation);
+				
 				//Dodawanie osobnika do rozwiązania
+				subjectCollection.add(subject);
 			}
 			
 			//Dodawanie rozwiązania do populacji
+			firstPopulation.add(subjectCollection);
 		}
 				
 		return firstPopulation;
