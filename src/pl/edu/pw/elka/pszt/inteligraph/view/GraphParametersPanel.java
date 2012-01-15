@@ -58,7 +58,7 @@ public class GraphParametersPanel extends JPanel {
 	setPreferredSize(new Dimension(Constans.WINDOW_WIDTH,
 		Constans.PANEL_HEIGHT));
 	this.add(lambdaLabel);
-	this.add(lambdaField);
+	this.add(lambdaField);	
 	this.add(miLabel);
 	this.add(miField);
 	this.add(stepsLabel);
@@ -77,11 +77,14 @@ public class GraphParametersPanel extends JPanel {
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
-		blockingQueue.add(new Event(EventName.DRAW_GRAPH_N));
+		if (lambda >= 1 && mi >= 1 && steps >= 1) {
+		    blockingQueue.add(new Event(EventName.DRAW_GRAPH_N));
+		} else {
+		    throw new NumberFormatException();
+		}
 	    } catch (NumberFormatException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	    }
+		blockingQueue.add(new Event(EventName.WRONG_GRAPH_PARAMS));
+	    } 
 	}
     }
 
@@ -94,10 +97,13 @@ public class GraphParametersPanel extends JPanel {
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
-		blockingQueue.add(new Event(EventName.DRAW_GRAPH_INF));
+		if (lambda >= 1 && mi >= 1 && steps >= 1) {
+		    blockingQueue.add(new Event(EventName.DRAW_GRAPH_INF));
+		} else {
+		    throw new NumberFormatException();
+		}	
 	    } catch (NumberFormatException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
+		blockingQueue.add(new Event(EventName.WRONG_GRAPH_PARAMS));
 	    }
 
 	}
@@ -112,6 +118,7 @@ public class GraphParametersPanel extends JPanel {
 	}
     }
 
+    
     /**
      * Zwraca parametry dla algorytmu.
      * @return tablica parametrów 

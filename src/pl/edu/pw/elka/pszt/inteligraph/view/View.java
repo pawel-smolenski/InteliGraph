@@ -8,21 +8,21 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import edu.uci.ics.jung.graph.Graph;
+import javax.swing.JOptionPane;
 
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import pl.edu.pw.elka.pszt.inteligraph.model.VertexName;
+import sun.security.x509.AVA;
+import edu.uci.ics.jung.graph.Graph;
 
 /**
  * Główna klasa tworząca graficzny interfejs użytkownika.
@@ -41,7 +41,6 @@ public class View {
     private GraphParametersPanel graphParametersPanel;
     private StatusBar statusBar;
     private GraphView graphView;
-    private int graphViewIndex = 117;
 
     private EventsBlockingQueue blockingQueue;
 
@@ -74,6 +73,7 @@ public class View {
 	f.addWindowListener(new ListenCloseWdw());
 	menuItemQuit.addActionListener(new ListenMenuQuit());
 	menuItemOpen.addActionListener(new ListenMenuOpen());
+	menuItemAbout.addActionListener(new ListenAbout());
 
 	f.getContentPane().add(graphParametersPanel, BorderLayout.NORTH);
 	f.getContentPane().add(statusBar, BorderLayout.SOUTH);
@@ -151,6 +151,16 @@ public class View {
 	    System.exit(0);
 	}
     }
+    
+    /**
+     * Listener obsługujący zamykanie okna.
+     */
+    public class ListenAbout implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	    blockingQueue.add(new Event(EventName.ABOUT));
+	}
+    }
 
     /**
      * Wyświetla okno.
@@ -158,11 +168,20 @@ public class View {
     public void showWindow() {
 	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	f.setSize(Constans.WINDOW_WIDTH, Constans.WINDOW_HEIGHT);
-
 	f.setVisible(true);
     }
 
     public File getGraphFile() {
 	return fileGraph;
+    }
+    
+    /**
+     * Wyświetla wyskakujące okienko
+     * @param warningText 
+     * @param title
+     * @param messageType
+     */
+    public void showPopupWindow(String warningText, String title, int messageType) {
+	JOptionPane.showMessageDialog(f, warningText, title, messageType);
     }
 }

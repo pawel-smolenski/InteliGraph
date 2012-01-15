@@ -6,13 +6,8 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.Random;
 
-import javax.swing.SwingUtilities;
-
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
-import sun.awt.windows.ThemeReader;
-import sun.security.provider.certpath.Vertex;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SparseGraph;
 
 public class Model
 {

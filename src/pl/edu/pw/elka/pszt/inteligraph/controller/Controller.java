@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.pszt.inteligraph.controller;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
@@ -59,7 +60,10 @@ public class Controller {
         				view.getGraphParametersPanel().setStopButtonActive(true);
         				view.getGraphParametersPanel().setStepsButtonActive(false);
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
-                			view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroków...");
+                			if (view.getSteps() == 1)
+                			    view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroku...");
+                			else 
+                			    view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroków...");
         			    }
         			});
 
@@ -103,6 +107,7 @@ public class Controller {
 			});
 		    }
 		});
+		
 		eventHandlers.put(EventName.CHOOSE_FILE, new EventHandler() {
 		    
 		    @Override
@@ -129,6 +134,33 @@ public class Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		    }
+		});
+		
+		eventHandlers.put(EventName.WRONG_GRAPH_PARAMS, new EventHandler() {
+		    @Override
+		    public void execute() {
+			if (model.getGraph() != null) {
+        			SwingUtilities.invokeLater(new Runnable() {
+        			    @Override
+        			    public void run() {
+        				view.showPopupWindow("Podano złe parametry dla algorytmu.\nMuszą być to liczby całkowite większe od 0.", "Uwaga!", JOptionPane.WARNING_MESSAGE);
+        				view.getStatusBar().setAppState("Proszę poprawić!");
+        			    }
+        			});
+			}
+		    }
+		});
+		
+		eventHandlers.put(EventName.ABOUT, new EventHandler() {
+		    @Override
+		    public void execute() {
+        		SwingUtilities.invokeLater(new Runnable() {
+        		    @Override
+        		    public void run() {
+        			view.showPopupWindow(Constans.APP_INFO, Constans.APP_NAME + "about", JOptionPane.INFORMATION_MESSAGE);
+        		    }
+        		});
 		    }
 		});
 	}
