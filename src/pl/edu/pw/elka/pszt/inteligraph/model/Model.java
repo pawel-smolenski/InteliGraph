@@ -200,6 +200,15 @@ public class Model
 					}
 					
 					Model.this.bestSubjectCollection = childrenPopulation.get(0);
+					Model.this.calculateQuality(Model.this.bestSubjectCollection);
+					
+					for(int l = 0; l < childrenPopulation.size(); l++)
+					{
+						if(Model.this.bestSubjectCollection.getQuality() > Model.this.calculateQuality(childrenPopulation.get(l)))
+						{
+							Model.this.bestSubjectCollection = childrenPopulation.get(l);
+						}
+					}
 					
 					Model.this.evolutionSteps++;
 					
