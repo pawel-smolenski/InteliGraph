@@ -1,8 +1,6 @@
 package pl.edu.pw.elka.pszt.inteligraph.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -11,6 +9,9 @@ import javax.swing.JPanel;
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 
+/**
+ * Dolny statusBar informujący użytkownika o danych grafu, stanie aplikacji, oraz liczby wykonanych iteracji algorytmu.
+ */
 public class StatusBar extends JPanel {
     
     private JLabel appStateLabel;

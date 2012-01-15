@@ -15,6 +15,9 @@ import pl.edu.pw.elka.pszt.inteligraph.events.Event;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 
+/**
+ * Górny panel służący do wprowadzania parametrów algorytmu oraz kontroli jego wykonywania.
+ */
 public class GraphParametersPanel extends JPanel {
 
     private TextField lambdaField;

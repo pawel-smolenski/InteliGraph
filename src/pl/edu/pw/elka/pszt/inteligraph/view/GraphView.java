@@ -1,14 +1,7 @@
 package pl.edu.pw.elka.pszt.inteligraph.view;
 
 import java.awt.Dimension;
-import java.awt.Paint;
-import java.awt.PaintContext;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.ColorModel;
 import java.util.Map;
 
 import org.apache.commons.collections15.Transformer;
@@ -25,6 +18,9 @@ import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 import edu.uci.ics.jung.visualization.decorators.EdgeShape;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 
+/**
+ * Klasa odpowiedzialna za tworzenie widoku grafu.
+ */
 public class GraphView {
 
     private Graph<VertexName, String> graph;

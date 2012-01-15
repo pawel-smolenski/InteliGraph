@@ -218,6 +218,10 @@ public class Model
 		
 	}
 	
+	/**
+	 * Na podstawie nazwy krawędzi ustala i tworzy listę par wierzchołków krawędzi.
+	 * @return lista par wierzchołków
+	 */
 	public List<Pair<VertexName>> getGraphEdges() {
 	    ArrayList<String> edgesList = new ArrayList<String>();
 	    edgesList.addAll(graph.getEdges());
