@@ -5,7 +5,9 @@ import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
@@ -153,9 +155,43 @@ public class Model
 	 */
 	private Integer calculateQuality(SubjectCollection solution)
 	{
-		// TODO Auto-generated method stub
-		solution.setQuality(1);
-		return 1;
+		int quality = 0;
+		Sections check = new Sections();
+		List<Pair<VertexName>> vertexPairList = getGraphEdges();
+		Map<VertexName, Point> map= new HashMap<VertexName, Point>();
+		for(Pair<VertexName> p: vertexPairList)
+		{
+			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
+			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
+
+		}
+		
+		for(Pair<VertexName> pFirst: vertexPairList )
+		{
+			for(Pair<VertexName> pSecond: vertexPairList )
+			{
+				if(!pFirst.getFirst().equals(pSecond.getFirst()) || !pFirst.getSecond().equals(pSecond.getSecond()) )
+				{
+					switch (check.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
+					case -1:
+						System.out.println("do dupy");
+						solution.setQuality(-1);
+						return -1;
+
+					case 1:
+						System.out.println(pFirst + "	" +pSecond);
+
+						quality++;
+						break;
+					}
+					
+				}
+					
+			}
+		}
+		System.out.println(quality);
+		solution.setQuality(quality);
+		return quality;
 	}
 
 
@@ -195,8 +231,10 @@ public class Model
 					
 					//Dodawanie osobnika do rozwiązania
 					subjectCollection.add(subject);
+					
 				}
-			} while(this.calculateQuality(subjectCollection) < 0); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
+				
+			} while( this.calculateQuality(subjectCollection)<0 ); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
 			firstPopulation.add(subjectCollection);
@@ -222,7 +260,7 @@ public class Model
 	 * Na podstawie nazwy krawędzi ustala i tworzy listę par wierzchołków krawędzi.
 	 * @return lista par wierzchołków
 	 */
-	public List<Pair<VertexName>> getGraphEdges() {
+	private List<Pair<VertexName>> getGraphEdges() {
 	    ArrayList<String> edgesList = new ArrayList<String>();
 	    edgesList.addAll(graph.getEdges());
 	    List<Pair<VertexName>> ret = new ArrayList<Pair<VertexName>>();

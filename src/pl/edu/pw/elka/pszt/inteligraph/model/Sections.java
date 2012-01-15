@@ -25,8 +25,8 @@ public class Sections
 			return 0 ;
 			else 
 			{
-				if ((Math.min(xx, yx) <= zx) && (zx <= Math.max(xx, yx)) &&
-				(Math.min(xy, yy) <= zy) && (zy <= Math.max(xy, yy)))
+				if ((Math.min(xx, yx) < zx) && (zx < Math.max(xx, yx)) &&
+				(Math.min(xy, yy) < zy) && (zy < Math.max(xy, yy)))
 				return 1;
 				else
 				return 0;
@@ -52,6 +52,12 @@ public class Sections
 			//int i,det; //wyznacznik macierzy
 			int x[] = new int[4]; //tablica wspolrzednych x punktow
 			int y[] = new int[4]; //tablica wspolrzednych y punktow
+			/*System.out.println("prezcinanie");
+			System.out.println(beg_1);
+			System.out.println(end_1);
+			
+			System.out.println(beg_2);
+			System.out.println(end_2);*/
 	
 			x[0] =  beg_1.x;
 			y[0] =  beg_1.y;

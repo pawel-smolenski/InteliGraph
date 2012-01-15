@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.pszt.inteligraph.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,16 @@ public class SubjectCollection extends ArrayList<Subject> {
 	public void setQuality(Integer quality)
 	{
 		this.quality = quality;
+	}
+
+	public Point getPoint(VertexName first) 
+	{
+		for(Subject s : this)
+		{
+			if(s.getVertexName().equals(first))
+				return s.getPoint();
+		}
+		return null;
 	}
 	
 }
