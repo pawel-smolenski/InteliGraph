@@ -3,11 +3,14 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 import java.awt.Point;
 import java.io.File;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.util.Pair;
 
 public class Model
 {
@@ -215,5 +218,13 @@ public class Model
 		
 	}
 	
-	
+	public List<Pair<VertexName>> getGraphEdges() {
+	    ArrayList<String> edgesList = new ArrayList<String>();
+	    edgesList.addAll(graph.getEdges());
+	    List<Pair<VertexName>> ret = new ArrayList<Pair<VertexName>>();
+	    for(String s : edgesList) {
+		ret.add(graph.getEndpoints(s));
+	    }
+	    return ret;
+	}
 }

@@ -113,16 +113,15 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
-
-			SwingUtilities.invokeLater(new Runnable() {
-			    @Override
-			    public void run() {
+//			SwingUtilities.invokeLater(new Runnable() {
+//			    @Override
+//			    public void run() {
 				view.getGraphParametersPanel().setStopButtonActive(false);
 				view.getGraphParametersPanel().setStepsButtonActive(true);
 				view.getStatusBar().setAppState("Otworzono: " + view.getGraphFile().getName());
 				view.getStatusBar().setGraphParams(model.getGraph().getVertexCount(), model.getGraph().getEdgeCount());
-			    }
-			});
+//			    }
+//			});
 			
 			model.calculateVerticesPositions(1, 10);
 			try
@@ -158,7 +157,7 @@ public class Controller {
         		SwingUtilities.invokeLater(new Runnable() {
         		    @Override
         		    public void run() {
-        			view.showPopupWindow(Constans.APP_INFO, Constans.APP_NAME + "about", JOptionPane.INFORMATION_MESSAGE);
+        			view.showPopupWindow(Constans.APP_INFO, Constans.APP_NAME + " about", JOptionPane.INFORMATION_MESSAGE);
         		    }
         		});
 		    }
