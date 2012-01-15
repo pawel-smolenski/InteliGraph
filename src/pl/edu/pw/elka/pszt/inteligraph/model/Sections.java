@@ -3,19 +3,19 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 
+/**
+ * Klasa zapewniająca obsługę, rozpoznawania problemu przecinania się krawędzi.
+ */
 public class Sections
 {
 	/**
-	 * Point 
-	 * 
-	 * @return 
-	 * 1-jeżeli przecinają się
-	 * 0-nie przecinaja sie
-	 *-1-krawędz zawiera wierzchołek 2 krawędzi
+	 * Sprawdza czy dwie krawędzie sie przecinają, zakłada że krawędzie które maja wspólne początki lub końce nie przecinają się.
+	 * @return  1 - jeżeli przecinają się, 0 - nie przecinają sie
 	 */
-	public int isCrossing(Point beg1, Point end1, Point beg2, Point end2) {
+	public static int isCrossing(Point beg1, Point end1, Point beg2, Point end2) {
 	    int[] xs = {beg2.x, end2.x};
 	    int[] ys = {beg2.y, end2.y};
+	    //sprawdzanie czy 
 	    for (int i = 0 ; i < 2 ; ++i) {
 		if (beg1.x == xs[i]) {
 		    if (beg1.y == ys[i])

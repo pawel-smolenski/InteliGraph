@@ -57,7 +57,6 @@ public class Controller {
         			SwingUtilities.invokeLater(new Runnable() {
         			    @Override
         			    public void run() {
-        				model.test();
         				view.getGraphParametersPanel().setStopButtonActive(true);
         				view.getGraphParametersPanel().setStepsButtonActive(false);
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
@@ -113,6 +112,13 @@ public class Controller {
 				}
 //			    }
 //			});
+		    }
+		});
+		
+		eventHandlers.put(EventName.ITERATION_ALGORITHM, new EventHandler() {
+		    @Override
+		    public void execute() {
+			view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps(), model.getGraphQuality());
 		    }
 		});
 		

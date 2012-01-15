@@ -26,6 +26,11 @@ public enum EventName {
 	DRAW_GRAPH_STOP,
 	
 	/**
+	 * Odświeżanie iteracji.
+	 */
+	ITERATION_ALGORITHM,
+	
+	/**
 	 * Obsługa wczytania pliku.
 	 */
 	CHOOSE_FILE,

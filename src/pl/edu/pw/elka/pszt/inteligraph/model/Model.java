@@ -221,6 +221,7 @@ public class Model
 					}
 					
 					Model.this.evolutionSteps++;
+					blockingQueue.add(new Event(EventName.ITERATION_ALGORITHM));
 					
 				}
 				
@@ -263,9 +264,8 @@ public class Model
 	private Integer calculateQuality(SubjectCollection solution)
 	{
 		int quality = 0;
-		Sections check = new Sections();
 		List<Pair<VertexName>> vertexPairList = getGraphEdges();
-		Map<VertexName, Point> map= new HashMap<VertexName, Point>();
+		Map<VertexName, Point> map = new HashMap<VertexName, Point>();
 		for(Pair<VertexName> p: vertexPairList)
 		{
 			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
@@ -283,7 +283,7 @@ public class Model
 				{
 				    System.out.println("wywołuje dla: [" + pFirst
 					    + "] [" + pSecond + "]");
-					switch (check.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
+					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
 					case -1:
 						solution.setQuality(-1);
 						return -1;
