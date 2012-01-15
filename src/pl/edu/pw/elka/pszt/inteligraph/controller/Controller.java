@@ -103,6 +103,14 @@ public class Controller {
 				view.getGraphParametersPanel().setStepsButtonActive(true);
 				view.getStatusBar().setAppState(Constans.STATE_COMPUTING_ENDED);
 				view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps());
+				try
+				{
+					view.setGraphView(model.getGraph(), model.getBestArrangement());
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			    }
 			});
 		    }
@@ -124,16 +132,7 @@ public class Controller {
 			    }
 			});
 			
-			model.calculateVerticesPositions(1, 10);
-			try
-			{
-				//model.getBestArrangement();
-				view.setGraphView(model.getGraph(), model.getBestArrangement());
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		    }
 		});
 		

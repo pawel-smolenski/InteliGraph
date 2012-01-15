@@ -2,10 +2,13 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.awt.Point;
 import java.io.File;
-import java.sql.Date;
 import java.util.Collection;
 import java.util.Random;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+
+import pl.edu.pw.elka.pszt.inteligraph.events.Event;
+import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import edu.uci.ics.jung.graph.Graph;
 
@@ -98,19 +101,17 @@ public class Model
 	 * @param lambda 
 	 * @param iterations Liczba iteracji, po której algorytm ma się zakończyć
 	 */
-	public void calculateVerticesPositions(Integer mi, Integer lambda, final Integer evolutionStepsToDo)
+	public void calculateVerticesPositions(final Integer mi, final Integer lambda, final Integer evolutionStepsToDo)
 	{
 		SubjectCollection subjectCollection;
-		Subject subject;
-		Point point;
-		Deviation deviation;
-		Population temporaryPopulation;
 		
-		Collection<VertexName> verticies = this.graph.getVertices();
+		final Collection<VertexName> verticies = this.graph.getVertices();
 		
 		this.currentPopulation = this.generateFirstPopulation(verticies, mi);
 		
-		this.pickBestSubjectCollection();
+		//this.pickBestSubjectCollection();
+		
+		this.bestSubjectCollection = currentPopulation.get(0);
 		
 		this.calculationThread = new Thread(new Runnable()
 		{
@@ -118,13 +119,102 @@ public class Model
 			@Override
 			public void run()
 			{
-				do
+				Population temporaryPopulation;
+				Population childrenPopulation;
+				SubjectCollection parentA, parentB, embryo, child;
+				Subject subjectA, subjectB, embryoSubject, childSubject;
+				Point embryoPoint, childPoint;
+				Deviation embryoDeviation, childDeviation;
+				Double embryoKsi, embryoSubjectKsi;
+				Double tau, tauPrime;
+				Double ni;
+				
+				Random random = new Random();
+				
+				tau = 1 / (Math.sqrt(2 * Math.sqrt(verticies.size())));
+				tauPrime = 1 / (Math.sqrt(2 * verticies.size()));
+				
+				while(evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo)
 				{
-					//algorytm ewolucyjny
-				}while(evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo);
+					
+					//Losowanie tymczasowej populacji
+					temporaryPopulation = new Population();
+					for(int i = 0; i < lambda; i++)
+					{
+						temporaryPopulation.add(Model.this.currentPopulation.get(random.nextInt(mi)));
+					}
+					
+					//Tworzenie populacji potomnej
+					childrenPopulation = new Population();
+					
+					parentA = temporaryPopulation.get(0); 
+					for(int i = 1; i < lambda; i++)
+					{
+						parentB = temporaryPopulation.get(i);
+						embryo = new SubjectCollection();
+						
+						
+						//Tworzenie zarodków poprzez uśrednianie
+						for(int j = 0; j < verticies.size(); j++)
+						{
+							subjectA = parentA.get(j);
+							subjectB = parentB.get(j);
+							
+							embryoPoint = new Point((subjectA.getPoint().x+subjectB.getPoint().x)/2, (subjectA.getPoint().y+subjectB.getPoint().y)/2);
+							embryoDeviation = new Deviation((subjectA.getDeviation().deviation+subjectB.getDeviation().deviation)/2);
+							
+							embryoSubject = new Subject(subjectA.getVertexName(), embryoPoint, embryoDeviation);
+							
+							embryo.add(embryoSubject);
+						}
+						
+						
+						
+						
+						embryoKsi = random.nextGaussian();
+						
+						child = new SubjectCollection();
+						
+						//Tworzenie dzieci poprzez mutację zarodków
+						for(int k = 0; k < verticies.size(); k++)
+						{
+							embryoSubject = embryo.get(k);
+							embryoSubjectKsi = random.nextGaussian();
+							ni = random.nextGaussian();
+							
+							childDeviation = new Deviation((int)(embryoSubject.getDeviation().deviation * Math.exp(tauPrime*embryoKsi + tau*embryoSubjectKsi)));
+							childPoint = new Point((int)(embryoSubject.getPoint().x + childDeviation.deviation*ni), (int)(embryoSubject.getPoint().y + childDeviation.deviation*ni));
+							
+							childSubject = new Subject(embryoSubject.getVertexName(), childPoint, childDeviation);
+							
+							child.add(childSubject);
+						}
+						
+						childrenPopulation.add(child);
+						
+						parentA = parentB;
+						
+					}
+					
+					Model.this.bestSubjectCollection = childrenPopulation.get(0);
+					
+					Model.this.evolutionSteps++;
+					
+				}
+				
+				try
+				{
+					Model.this.blockingQueue.put(new Event(EventName.DRAW_GRAPH_STOP));
+				} catch (InterruptedException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 		});
+		
+		calculationThread.start();
 	}
 
 
@@ -168,7 +258,6 @@ public class Model
 		Point point;
 		Deviation deviation;
 		Subject subject;
-		int seed = 0;
 		
 		
 		//Generowanie "mi" losowych rozwiązań(SubjectCollections)
@@ -185,7 +274,7 @@ public class Model
 					point = new Point(random.nextInt(800), random.nextInt(600));
 
 					//Generowanie odchylenia
-					deviation = new Deviation(0.1);
+					deviation = new Deviation((int)(random.nextGaussian()*200 + 400));
 					
 					//Tworzenie osobnika
 					subject = new Subject(vertex, point, deviation);
