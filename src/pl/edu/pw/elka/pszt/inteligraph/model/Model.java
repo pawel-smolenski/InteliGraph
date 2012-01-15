@@ -63,6 +63,13 @@ public class Model
 	public int getEvolutionSteps() {
 	    return evolutionSteps;
 	}
+	
+	/**
+	 * @return jakość aktualnego rozwiązania grafu
+	 */
+	public int getGraphQuality() {
+	    return bestSubjectCollection.getQuality();
+	}
 
 
 	/**
@@ -88,8 +95,11 @@ public class Model
 		
 		Arrangement arrangement = new Arrangement();
 		
+		System.out.println("UWAGA TUTAJ BEDZIE TO CZEGO SZUKAMY::::");
+		calculateQuality(bestSubjectCollection);
+		
 		for(Subject subject : this.bestSubjectCollection)
-		{
+		{	
 			arrangement.put(subject.getVertexName(), subject.getPoint());
 		}
 		
@@ -112,10 +122,8 @@ public class Model
 		
 		this.currentPopulation = this.generateFirstPopulation(verticies, mi);
 		
-		//this.pickBestSubjectCollection();
-		
-		this.bestSubjectCollection = currentPopulation.get(0);
-		
+		this.pickBestSubjectCollection();
+	
 		this.calculationThread = new Thread(new Runnable()
 		{
 			
@@ -199,9 +207,11 @@ public class Model
 						
 					}
 					
-					Model.this.bestSubjectCollection = childrenPopulation.get(0);
-					Model.this.calculateQuality(Model.this.bestSubjectCollection);
-					
+					if (Model.this.bestSubjectCollection == null) {
+					    Model.this.bestSubjectCollection = childrenPopulation.get(0);
+					    Model.this.calculateQuality(Model.this.bestSubjectCollection);
+					}
+									
 					for(int l = 0; l < childrenPopulation.size(); l++)
 					{
 						if(Model.this.bestSubjectCollection.getQuality() > Model.this.calculateQuality(childrenPopulation.get(l)))
@@ -237,7 +247,7 @@ public class Model
 	{
 		for(SubjectCollection solution : this.currentPopulation)
 		{
-			if(this.bestSubjectCollection == null || this.calculateQuality(solution) >= this.bestSubjectCollection.getQuality())
+			if(this.bestSubjectCollection == null || this.calculateQuality(solution) < this.bestSubjectCollection.getQuality())
 			{
 				this.bestSubjectCollection = solution;
 			}
@@ -260,37 +270,53 @@ public class Model
 		{
 			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
 			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
-
+			
 		}
+		
+		
 		
 		for(Pair<VertexName> pFirst: vertexPairList )
 		{
 			for(Pair<VertexName> pSecond: vertexPairList )
-			{
-				if(!pFirst.getFirst().equals(pSecond.getFirst()) || !pFirst.getSecond().equals(pSecond.getSecond()) )
+			{	
+				if(!checkPoints(pFirst, pSecond))
 				{
+				    System.out.println("wywołuje dla: [" + pFirst
+					    + "] [" + pSecond + "]");
 					switch (check.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
 					case -1:
-						System.out.println("do dupy");
 						solution.setQuality(-1);
 						return -1;
 
 					case 1:
-						System.out.println(pFirst + "	" +pSecond);
-
 						quality++;
 						break;
+					default:
+					    break;
 					}
 					
 				}
 					
 			}
 		}
-		System.out.println(quality);
+		System.out.println("quality: " + quality);
 		solution.setQuality(quality);
 		return quality;
 	}
+	
 
+	/**
+	 * Sprawdza czy dwie pary punktów są takie same.
+	 * @param p1
+	 * @param p2
+	 * @return TURE jak są takie same
+	 */
+	private boolean checkPoints(Pair<VertexName> p1, Pair<VertexName> p2) {
+	    if (p1.getFirst().getName().equals(p2.getFirst().getName()) && p1.getSecond().getName().equals(p2.getSecond().getName()) ) {
+		return true;
+	    }
+	    return false;
+	}
 
 	/**
 	 * @param mi
@@ -330,7 +356,7 @@ public class Model
 					
 				}
 				
-			} while( this.calculateQuality(subjectCollection)<0 ); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
+			} while( this.calculateQuality(subjectCollection) < 0 ); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
 			firstPopulation.add(subjectCollection);

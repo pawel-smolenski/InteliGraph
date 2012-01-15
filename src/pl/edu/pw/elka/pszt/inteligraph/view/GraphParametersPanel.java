@@ -34,8 +34,8 @@ public class GraphParametersPanel extends JPanel {
 
     private final int textFieldsWidth = 10;
 
-    private int lambda = 5;
-    private int mi = 10;
+    private int lambda = 3;
+    private int mi = 4;
     private int steps = 1;
 
     public GraphParametersPanel(EventsBlockingQueue blockingQueue) {

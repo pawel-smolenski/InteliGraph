@@ -1,44 +1,10 @@
 package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.awt.Point;
+import java.awt.geom.Line2D;
 
 public class Sections
 {
-		 
-		/**
-		 *   Ta funkcja sprawdza, czy punkt z należy do odcinka |xy|
-		 * @param xx
-		 * @param xy
-		 * @param yx
-		 * @param yy
-		 * @param zx
-		 * @param zy
-		 * @return
-		 */
-	private static int contains(int xx, int xy, int yx, int yy, int zx, int zy)    
-		{
-			int det; //wyznacznik macierzy
-			 
-			det = xx*yy + yx*zy + zx*xy - zx*yy - xx*zy - yx*xy;
-			
-			if (det!=0)
-			return 0 ;
-			else 
-			{
-				if ((Math.min(xx, yx) < zx) && (zx < Math.max(xx, yx)) &&
-				(Math.min(xy, yy) < zy) && (zy < Math.max(xy, yy)))
-				return 1;
-				else
-				return 0;
-			}
-		}
-		 
-		//  wyznacznik macierzy
-	private static int det_matrix(int xx, int xy, int yx, int yy, int zx, int zy)
-		{
-		return (xx*yy + yx*zy + zx*xy - zx*yy - xx*zy - yx*xy);
-		}
-		 
 	/**
 	 * Point 
 	 * 
@@ -47,53 +13,53 @@ public class Sections
 	 * 0-nie przecinaja sie
 	 *-1-krawędz zawiera wierzchołek 2 krawędzi
 	 */
-	public  int isCrossing(Point beg_1, Point end_1, Point beg_2, Point end_2) 
-		{
-			//int i,det; //wyznacznik macierzy
-			int x[] = new int[4]; //tablica wspolrzednych x punktow
-			int y[] = new int[4]; //tablica wspolrzednych y punktow
-			/*System.out.println("prezcinanie");
-			System.out.println(beg_1);
-			System.out.println(end_1);
-			
-			System.out.println(beg_2);
-			System.out.println(end_2);*/
-	
-			x[0] =  beg_1.x;
-			y[0] =  beg_1.y;
-			
-			x[1] = end_1.x;
-			y[1] = end_1.y;
-			
-			x[2] = beg_2.x;
-			y[2] = beg_2.y;
-			
-			x[3] = end_2.x;
-			y[3] = end_2.y;
-			/*x[0] =  1;
-			y[0] =  1;
-			
-			x[1] = 1;
-			y[1] = 3;
-			
-			x[2] = 2;
-			y[2] = 3;
-			
-			x[3] = 2;
-			y[3] = 0;*/
-			 
-			//      Sprawdzanie, czy jakiś punkt należy do drugiego odcinka
-			if (contains(x[0], y[0], x[1], y[1], x[2], y[2])==1) return -1; else
-			if (contains(x[0], y[0], x[1], y[1], x[3], y[3])==1) return -1; else
-			if (contains(x[2], y[2], x[3], y[3], x[0], y[0])==1) return -1; else
-			if (contains(x[2], y[2], x[3], y[3], x[1], y[1])==1) return -1; else
-			 
-			//      zaden punkt nie nalezy do drugego odcinka
-			if ((det_matrix(x[0], y[0], x[1], y[1], x[2], y[2]))*(det_matrix(x[0], y[0], x[1], y[1], x[3], y[3]))>=0)
-			return 0; else
-			if ((det_matrix(x[2], y[2], x[3], y[3], x[0], y[0]))*(det_matrix(x[2], y[2], x[3], y[3], x[1], y[1]))>=0)
+	public int isCrossing(Point beg1, Point end1, Point beg2, Point end2) {
+	    int[] xs = {beg2.x, end2.x};
+	    int[] ys = {beg2.y, end2.y};
+	    for (int i = 0 ; i < 2 ; ++i) {
+		if (beg1.x == xs[i]) {
+		    if (beg1.y == ys[i])
 			return 0;
-			else //znaki wyznaczników sa równe
-			return 1;
 		}
+		if (end1.x == xs[i]) {
+		    if (end1.y == ys[i])
+			return 0;
+		}
+	    }
+	    if(Line2D.linesIntersect(beg1.x, beg1.y, end1.x, end1.y, beg2.x, beg2.y, end2.x, end2.y)) {
+		return 1;
+	    }
+	    return 0;
+	}
+	/**
+	 * Sprawdza czy odcinki się przecinają.
+	 * @param beg1
+	 * @param end1
+	 * @param beg2
+	 * @param end2
+	 * @return 1 jak się przecinają, 0 jak się nie przecinają.
+	 */
+	public int crossing(Point beg1, Point end1, Point beg2, Point end2) {
+	    double a1, a2;
+	    double b1, b2;
+	    a1 = ((double)end1.y - (double)beg1.y)/((double)end1.x-(double)beg1.x);
+	    b1 = (double)end1.y - (a1)*(double)end1.x;
+	    
+	    a2 = ((double)end2.y - (double)beg2.y)/((double)end2.x-(double)beg2.x);
+	    b2 = (double)end2.y - (a2)*(double)end2.x;
+	    
+	    double w, wX, wY, x, y;
+	    w = a1*(-1.0) - a2*(-1.0);
+	    wX = b1*(-1.0) - b2*(-1.0);
+	    wY = a1*b2 - a2*b1;
+	    
+	    x = -wX/w; y = -wY/w;
+//	    System.out.println("" + beg1 + end1 + beg2 + end2);
+//	    System.out.println("y1="+a1+"x"+"-"+b1+" y2="+a2+"x"+"-"+b2);
+	    System.out.println("["+ x + ", " + y + "]");
+	    System.out.println(beg1.distance(x, y) + " + " + end1.distance(x, y) +" < "+ beg1.distance(end1));
+	    if ((beg1.distance(x, y) + end1.distance(x, y) < beg1.distance(end1)))
+		return 1;    
+	    return 0;	    
+	}
 }

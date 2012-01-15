@@ -45,7 +45,7 @@ public class Controller {
 				view.showWindow();
 				view.getGraphParametersPanel().setStopButtonActive(false);
 				view.getGraphParametersPanel().setStepsButtonActive(false);
-				view.getStatusBar().setAppState("...");
+				view.getStatusBar().setAppState("");
 			}
 		});
 		
@@ -57,6 +57,7 @@ public class Controller {
         			SwingUtilities.invokeLater(new Runnable() {
         			    @Override
         			    public void run() {
+        				model.test();
         				view.getGraphParametersPanel().setStopButtonActive(true);
         				view.getGraphParametersPanel().setStepsButtonActive(false);
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
@@ -94,15 +95,14 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.stopCalculations();
-			model.getEvolutionSteps();
 			
-			SwingUtilities.invokeLater(new Runnable() {
-			    @Override
-			    public void run() {
+//			SwingUtilities.invokeLater(new Runnable() {
+//			    @Override
+//			    public void run() {
 				view.getGraphParametersPanel().setStopButtonActive(false);
 				view.getGraphParametersPanel().setStepsButtonActive(true);
 				view.getStatusBar().setAppState(Constans.STATE_COMPUTING_ENDED);
-				view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps());
+				view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps(), model.getGraphQuality());
 				try
 				{
 					view.setGraphView(model.getGraph(), model.getBestArrangement());
@@ -111,8 +111,8 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    }
-			});
+//			    }
+//			});
 		    }
 		});
 		
@@ -142,7 +142,7 @@ public class Controller {
         			SwingUtilities.invokeLater(new Runnable() {
         			    @Override
         			    public void run() {
-        				view.showPopupWindow("Podano złe parametry dla algorytmu.\nMuszą być to liczby całkowite większe od 0.", "Uwaga!", JOptionPane.WARNING_MESSAGE);
+        				view.showPopupWindow("Podano złe parametry dla algorytmu.\nMuszą być to liczby całkowite większe od 2.", "Uwaga!", JOptionPane.WARNING_MESSAGE);
         				view.getStatusBar().setAppState("Proszę poprawić!");
         			    }
         			});
