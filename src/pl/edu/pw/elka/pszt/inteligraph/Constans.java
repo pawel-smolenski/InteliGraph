@@ -39,6 +39,6 @@ public class Constans {
     /**
      * Informacja o programie
      */
-    public static final String APP_INFO = "InteliGraph - program wykonany na potrzeby projektu \nz przedmiotu Podstawy Sztucznej Inteligencji. Program\nprzestawia optymalne ułożenie grafu na płaszczyźnie\nkorzystając z algorytmu ewolucyjnego (μ + λ).\n\nautorzy:\nPiotr Okuła\nPaweł Smoleński\nWojciech Kaczorowski";
+    public static final String APP_INFO = "InteliGraph - program wykonany na potrzeby projektu \nz przedmiotu Podstawy Sztucznej Inteligencji. Program\nprzestawia optymalne ułożenie grafu na płaszczyźnie\nkorzystając z algorytmu ewolucyjnego (μ + λ).\n\n2011 - 2012\n\nautorzy:\nPiotr Okuła\nPaweł Smoleński\nWojciech Kaczorowski";
 
 }

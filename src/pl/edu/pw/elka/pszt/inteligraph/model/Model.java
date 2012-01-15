@@ -2,15 +2,16 @@ package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
-
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.util.Pair;
 
 public class Model
 {
@@ -304,5 +305,17 @@ public class Model
 		
 	}
 	
-	
+	/**
+	 * Na podstawie nazwy krawędzi ustala i tworzy listę par wierzchołków krawędzi.
+	 * @return lista par wierzchołków
+	 */
+	public List<Pair<VertexName>> getGraphEdges() {
+	    ArrayList<String> edgesList = new ArrayList<String>();
+	    edgesList.addAll(graph.getEdges());
+	    List<Pair<VertexName>> ret = new ArrayList<Pair<VertexName>>();
+	    for(String s : edgesList) {
+		ret.add(graph.getEndpoints(s));
+	    }
+	    return ret;
+	}
 }

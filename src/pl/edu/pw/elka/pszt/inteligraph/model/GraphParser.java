@@ -16,7 +16,7 @@ import javax.xml.stream.events.XMLEvent;
 public class GraphParser 
 {
 	static final String VERTEX = "vertex";
-	static final String EDEG = "edeg";
+	static final String EDGE = "edge";
 	static final String NAME = "name";
 	static final String BEGIN = "begin";
 	static final String END = "end";
@@ -47,7 +47,7 @@ public class GraphParser
 						event = eventReader.nextEvent();
 						NewGraph.addNewVertex( new VertexName(Integer.parseInt(event.asCharacters().getData())) );
 					}
-					if (startElement.getName().getLocalPart() == (EDEG)) {
+					if (startElement.getName().getLocalPart() == (EDGE)) {
 						
 					}
 	
@@ -74,7 +74,7 @@ public class GraphParser
 				}
 						if (event.isEndElement()) {
 							EndElement endElement = event.asEndElement();
-							if (endElement.getName().getLocalPart() == (EDEG)) 
+							if (endElement.getName().getLocalPart() == (EDGE)) 
 							{
 								NewGraph.addNewEdge(EdegName, EdegBegin, EdegEnd);
 							}
