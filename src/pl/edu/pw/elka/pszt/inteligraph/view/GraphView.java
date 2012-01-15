@@ -1,23 +1,24 @@
 package pl.edu.pw.elka.pszt.inteligraph.view;
 
 import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.Paint;
+import java.awt.PaintContext;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.HashMap;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.ColorModel;
 import java.util.Map;
-
-import javax.swing.SwingUtilities;
 
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.TransformerUtils;
 
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.model.VertexName;
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.layout.StaticLayout;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
@@ -49,6 +50,7 @@ public class GraphView {
 	// oznaczenia wierzchołków 
 	visualizationViewer.getRenderContext().setVertexLabelTransformer(
 		new ToStringLabeller<VertexName>());
+	
 	// nazwy krawędzi
 //	visualizationViewer.getRenderContext().setEdgeLabelTransformer(
 //		new ToStringLabeller());

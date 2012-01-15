@@ -6,7 +6,7 @@ package pl.edu.pw.elka.pszt.inteligraph.events;
 public enum EventName {
 	
     	/**
-    	 * 
+    	 * Event startowy, pokazuje puste okno.
     	 */
     	SHOW_EMPTY_WINDOW,
 	
@@ -29,4 +29,14 @@ public enum EventName {
 	 * Obsługa wczytania pliku.
 	 */
 	CHOOSE_FILE,
+	
+	/**
+	 * Podano złe parametry dla obliczeń algorytmu.
+	 */
+	WRONG_GRAPH_PARAMS,
+	
+	/**
+	 * O programie.
+	 */
+	ABOUT
 }
