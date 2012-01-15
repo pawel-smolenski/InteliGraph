@@ -140,7 +140,7 @@ public class Model
 	{
 		for(SubjectCollection solution : this.currentPopulation)
 		{
-			if(this.bestSubjectCollection == null || this.calculateQuality(solution) > this.bestSubjectCollection.getQuality())
+			if(this.bestSubjectCollection == null || this.calculateQuality(solution) >= this.bestSubjectCollection.getQuality())
 			{
 				this.bestSubjectCollection = solution;
 			}
@@ -173,7 +173,8 @@ public class Model
 		Point point;
 		Deviation deviation;
 		Subject subject;
-		int seed;
+		int seed = 0;
+		
 		
 		//Generowanie "mi" losowych rozwiązań(SubjectCollections)
 		for(int i=0; i < mi; i++)
@@ -184,12 +185,10 @@ public class Model
 			do
 			{
 				for(VertexName vertex : verticies)
-				{
-					seed = (int) System.currentTimeMillis() % 600;
-					
+				{					
 					//Generowanie punktu
-					point = new Point((random.nextInt(800)+seed)%800, (random.nextInt(600)+seed)%600);
-					
+					point = new Point(random.nextInt(800), random.nextInt(600));
+
 					//Generowanie odchylenia
 					deviation = new Deviation(0.1);
 					

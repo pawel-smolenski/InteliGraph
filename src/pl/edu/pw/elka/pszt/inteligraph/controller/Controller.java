@@ -119,7 +119,7 @@ public class Controller {
 			    }
 			});
 			
-			model.calculateVerticesPositions(5, 10);
+			model.calculateVerticesPositions(1, 10);
 			try
 			{
 				//model.getBestArrangement();
