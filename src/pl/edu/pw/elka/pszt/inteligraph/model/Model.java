@@ -297,11 +297,29 @@ public class Model
 	 */
 	private Integer calculateQuality(SubjectCollection solution)
 	{
-		int quality = 0;
+		int quality = 0, numberOfEdges = 0;
+		double currentEdgeLength = 0, edgeLengthSum = 0, avg = 0, longestEgde  = 0;
 		List<Pair<VertexName>> vertexPairList = getGraphEdges();
+		Collection<VertexName> vertexCollection = graph.getVertices();
+		
 		Map<VertexName, Point> map = new HashMap<VertexName, Point>();
 		for(Pair<VertexName> p: vertexPairList)
-		{
+		{	
+
+			currentEdgeLength = solution.getPoint(p.getFirst()).distance(solution.getPoint(p.getSecond()));
+			if(currentEdgeLength < 30 || currentEdgeLength > 50)
+			{
+				/*System.out.println(p.getFirst() + " " +p.getSecond()+ "za krótka:" + currentEdgeLength);
+				solution.setQuality(-1);
+				return -1;*/
+				quality += 1000;
+			}
+			if(currentEdgeLength > longestEgde)
+			{
+				longestEgde = currentEdgeLength;
+			}
+			numberOfEdges++;
+			edgeLengthSum += currentEdgeLength;
 			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
 			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
 
@@ -311,19 +329,32 @@ public class Model
 		
 		for(Pair<VertexName> pFirst: vertexPairList )
 		{
+			for(VertexName currentVertex: vertexCollection)
+			{
+				if((currentVertex.getName() != pFirst.getFirst().getName()) && (currentVertex.getName() != pFirst.getSecond().getName()) )
+				{
+					 double roznica = map.get(pFirst.getFirst()).distance(map.get(currentVertex)) + map.get(pFirst.getSecond()).distance(map.get(currentVertex)) - map.get(pFirst.getSecond()).distance(map.get(pFirst.getFirst()));
+					if( roznica - 2*map.get(pFirst.getSecond()).distance(map.get(pFirst.getFirst())) < 0 )
+					{
+						while ( roznica > 500)
+							roznica /= 10;
+						quality+= roznica;
+					}
+				}
+			}
 			for(Pair<VertexName> pSecond: vertexPairList )
 			{	
 				if(!checkPoints(pFirst, pSecond))
 				{
-				    System.out.println("wywołuje dla: [" + pFirst
-					    + "] [" + pSecond + "]");
+				  //  System.out.println("wywołuje dla: [" + pFirst
+					//    + "] [" + pSecond + "]");
 					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
 					case -1:
 						solution.setQuality(-1);
 						return -1;
 
 					case 1:
-						quality++;
+						quality += 10000;
 						break;
 					default:
 					    break;
@@ -333,7 +364,14 @@ public class Model
 					
 			}
 		}
-		System.out.println("quality: " + quality);
+		//quality *= 100;
+		avg = edgeLengthSum/numberOfEdges;
+		/*while(edgeLengthSum * edgeWeight > 500)
+		{
+			edgeLengthSum /= 10;
+		}*/
+		//quality += (int)(edgeLengthSum * edgeWeight) + (int)longestEgde/avg*100;
+		System.out.println("quality: " + quality + " edgeSum: " + edgeLengthSum);
 		solution.setQuality(quality);
 		return quality;
 	}
@@ -389,7 +427,7 @@ public class Model
 					subjectCollection.add(subject);
 					
 				}
-				
+				System.out.println("zawiecha");
 			} while( this.calculateQuality(subjectCollection) < 0 ); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
