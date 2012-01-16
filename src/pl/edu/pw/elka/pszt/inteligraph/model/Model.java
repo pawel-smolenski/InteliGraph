@@ -43,6 +43,7 @@ public class Model
 	 * Wątek przeprowadzający obliczenia
 	 */
 	private Thread calculationThread;
+	private volatile Boolean stopThread = false;
 	
 	public Model(EventsBlockingQueue blockingQueue)
 	{
@@ -145,7 +146,9 @@ public class Model
 				tau = 1 / (Math.sqrt(2 * Math.sqrt(verticies.size())));
 				tauPrime = 1 / (Math.sqrt(2 * verticies.size()));
 				
-				while(evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo)
+				Model.this.evolutionSteps = 0;
+				
+				while(!Model.this.stopThread && (evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo))
 				{
 					
 					//Losowanie tymczasowej populacji
