@@ -153,6 +153,8 @@ public class Model
 				
 				Model.this.evolutionSteps = 0;
 				
+				Model.this.stopThread = false;
+				
 				while(!Model.this.stopThread && (evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo))
 				{
 					
@@ -264,6 +266,14 @@ public class Model
 		calculationThread.start();
 	}
 
+
+	/**
+	 * Przerywa obliczenia
+	 */
+	public synchronized void stopCalculations()
+	{
+		this.stopThread = true;
+	}
 
 	/**
 	 * Wybiera najlepsze rozwiązanie z aktualnej populacji
@@ -392,14 +402,6 @@ public class Model
 	public void calculateVerticesPositions(Integer mi, Integer lambda)
 	{
 		this.calculateVerticesPositions(mi, lambda, null);
-	}
-	
-	/**
-	 * Przerywa obliczenia
-	 */
-	public void stopCalculations()
-	{
-		
 	}
 	
 	/**
