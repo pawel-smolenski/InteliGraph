@@ -426,4 +426,8 @@ public class Model
 	public void setEdgeWeight(double edgeWeight) {
 	    this.edgeWeight = edgeWeight;
 	}
+
+	public double getEdgeWeight() {
+	    return edgeWeight;
+	}
 }

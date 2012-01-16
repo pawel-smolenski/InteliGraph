@@ -106,7 +106,7 @@ public class Controller {
 				view.getGraphParametersPanel().setStopButtonActive(false);
 				view.getGraphParametersPanel().setStepsButtonActive(true);
 				view.getStatusBar().setAppState(Constans.STATE_COMPUTING_ENDED);
-				view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps(), model.getGraphQuality());
+				view.getStatusBar().setEvolutionResults(model.getEvolutionSteps(), model.getGraphQuality(), model.getEdgeWeight());
 				try
 				{
 					view.setGraphView(model.getGraph(), model.getBestArrangement());
@@ -123,7 +123,7 @@ public class Controller {
 		eventHandlers.put(EventName.ITERATION_ALGORITHM, new EventHandler() {
 		    @Override
 		    public void execute() {
-			view.getStatusBar().setEvolutionSteps(model.getEvolutionSteps(), model.getGraphQuality());
+			view.getStatusBar().setEvolutionResults(model.getEvolutionSteps(), model.getGraphQuality(), model.getEdgeWeight());
 		    }
 		});
 		
