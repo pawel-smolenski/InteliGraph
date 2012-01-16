@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
@@ -29,11 +30,15 @@ public class GraphParametersPanel extends JPanel {
     private JLabel miLabel;
     private JLabel lambdaLabel;
     private JLabel stepsLabel;
+    private JLabel edgeWeightLabel;
+    private JSlider edgeWeightSlider;
 
     private EventsBlockingQueue blockingQueue;
 
     private final int textFieldsWidth = 10;
 
+    private double edgeWeight = 500.0;
+    private int edgeWeightRange = 1000;
     private int lambda = 3;
     private int mi = 4;
     private int steps = 1;
@@ -41,9 +46,11 @@ public class GraphParametersPanel extends JPanel {
     public GraphParametersPanel(EventsBlockingQueue blockingQueue) {
 	super(new FlowLayout());
 	this.blockingQueue = blockingQueue;
+	edgeWeightSlider = new JSlider(JSlider.HORIZONTAL, 0, edgeWeightRange, (int) edgeWeight);
 	lambdaField = new TextField(String.valueOf(lambda) ,textFieldsWidth);
 	miField = new TextField(String.valueOf(mi), textFieldsWidth);
 	stepsField = new TextField(String.valueOf(steps), textFieldsWidth);
+	edgeWeightLabel = new JLabel(" waga:");
 	lambdaLabel = new JLabel(" λ:");
 	miLabel = new JLabel(" μ:");
 	stepsLabel = new JLabel(" n:");
@@ -58,8 +65,12 @@ public class GraphParametersPanel extends JPanel {
 	infStepButton.addActionListener(new ListenInfStepButton());
 	stopButton.addActionListener(new ListenStopButton());
 
+
+	
 	setPreferredSize(new Dimension(Constans.WINDOW_WIDTH,
 		Constans.PANEL_HEIGHT));
+	this.add(edgeWeightLabel);
+	this.add(edgeWeightSlider);
 	this.add(lambdaLabel);
 	this.add(lambdaField);	
 	this.add(miLabel);
@@ -77,6 +88,7 @@ public class GraphParametersPanel extends JPanel {
     public class ListenNStepButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    try {
+		edgeWeight = (double)edgeWeightSlider.getValue()/(double)edgeWeightRange;
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
@@ -97,6 +109,7 @@ public class GraphParametersPanel extends JPanel {
     public class ListenInfStepButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    try {
+		edgeWeight = (double)edgeWeightSlider.getValue()/(double)edgeWeightRange;
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
@@ -131,6 +144,9 @@ public class GraphParametersPanel extends JPanel {
 	return ret;
     }
 
+    public double getEdgeWeight() {
+	return edgeWeight;
+    }
 
     /**
      * Włącza i wyłącza stopButton.

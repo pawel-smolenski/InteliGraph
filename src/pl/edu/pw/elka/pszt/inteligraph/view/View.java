@@ -21,7 +21,6 @@ import pl.edu.pw.elka.pszt.inteligraph.events.Event;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventName;
 import pl.edu.pw.elka.pszt.inteligraph.events.EventsBlockingQueue;
 import pl.edu.pw.elka.pszt.inteligraph.model.VertexName;
-import sun.security.x509.AVA;
 import edu.uci.ics.jung.graph.Graph;
 
 /**
