@@ -141,7 +141,7 @@ public class Model
 				SubjectCollection parentA, parentB, embryo, child;
 				Subject subjectA, subjectB, embryoSubject, childSubject;
 				Point embryoPoint, childPoint;
-				Deviation embryoDeviation, childDeviation;
+				Deviation embryoDeviationX, embryoDeviationY, childDeviationX, childDeviationY;
 				Double embryoKsi, embryoSubjectKsi;
 				Double tau, tauPrime;
 				Double ni;
@@ -182,9 +182,11 @@ public class Model
 							subjectB = parentB.get(j);
 							
 							embryoPoint = new Point((subjectA.getPoint().x+subjectB.getPoint().x)/2, (subjectA.getPoint().y+subjectB.getPoint().y)/2);
-							embryoDeviation = new Deviation((subjectA.getDeviation().deviation+subjectB.getDeviation().deviation)/2);
+							embryoDeviationX = new Deviation((subjectA.getDeviationX().deviation+subjectB.getDeviationX().deviation)/2);
+							embryoDeviationY = new Deviation((subjectA.getDeviationY().deviation+subjectB.getDeviationY().deviation)/2);
 							
-							embryoSubject = new Subject(subjectA.getVertexName(), embryoPoint, embryoDeviation);
+							
+							embryoSubject = new Subject(subjectA.getVertexName(), embryoPoint, embryoDeviationX, embryoDeviationY);
 							
 							embryo.add(embryoSubject);
 						}
@@ -203,10 +205,11 @@ public class Model
 							embryoSubjectKsi = random.nextGaussian();
 							ni = random.nextGaussian();
 							
-							childDeviation = new Deviation((int)(embryoSubject.getDeviation().deviation * Math.exp(tauPrime*embryoKsi + tau*embryoSubjectKsi)));
-							childPoint = new Point((int)(embryoSubject.getPoint().x + childDeviation.deviation*ni), (int)(embryoSubject.getPoint().y + childDeviation.deviation*ni));
+							childDeviationX = new Deviation((int)(embryoSubject.getDeviationX().deviation * Math.exp(tauPrime*embryoKsi + tau*embryoSubjectKsi)));
+							childDeviationY = new Deviation((int)(embryoSubject.getDeviationY().deviation * Math.exp(tauPrime*embryoKsi + tau*embryoSubjectKsi)));
+							childPoint = new Point((int)(embryoSubject.getPoint().x + childDeviationX.deviation*ni), (int)(embryoSubject.getPoint().y + childDeviationY.deviation*ni));
 							
-							childSubject = new Subject(embryoSubject.getVertexName(), childPoint, childDeviation);
+							childSubject = new Subject(embryoSubject.getVertexName(), childPoint, childDeviationX, childDeviationY);
 							
 							child.add(childSubject);
 						}
@@ -362,7 +365,7 @@ public class Model
 		Population firstPopulation = new Population();
 		SubjectCollection subjectCollection;
 		Point point;
-		Deviation deviation;
+		Deviation deviationX, deviationY;
 		Subject subject;
 		
 		
@@ -380,10 +383,13 @@ public class Model
 					point = new Point(random.nextInt(800), random.nextInt(600));
 
 					//Generowanie odchylenia
-					deviation = new Deviation((int)(random.nextGaussian()*200 + 400));
+					deviationX = new Deviation((int)(random.nextGaussian()*200 + 400));
+					
+					//Generowanie odchylenia
+					deviationY = new Deviation((int)(random.nextGaussian()*200 + 400));
 					
 					//Tworzenie osobnika
-					subject = new Subject(vertex, point, deviation);
+					subject = new Subject(vertex, point, deviationX, deviationY);
 					
 					//Dodawanie osobnika do rozwiązania
 					subjectCollection.add(subject);
