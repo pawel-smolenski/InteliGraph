@@ -13,6 +13,8 @@ public class Sections
 	 * @return  1 - jeżeli przecinają się, 0 - nie przecinają sie
 	 */
 	public static int isCrossing(Point beg1, Point end1, Point beg2, Point end2) {
+		//if(beg1 == null || end1 == null || beg2 == null || end2 == null)
+		//	System.out.println("null");
 	    int[] xs = {beg2.x, end2.x};
 	    int[] ys = {beg2.y, end2.y};
 	    //sprawdzanie czy 

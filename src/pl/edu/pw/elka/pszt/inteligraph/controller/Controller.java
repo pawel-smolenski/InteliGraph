@@ -127,6 +127,7 @@ public class Controller {
 		    @Override
 		    public void execute() {
 			model.buildGraph(view.getGraphFile());
+			model.clearbestSubjectCollection();
 //			SwingUtilities.invokeLater(new Runnable() {
 //			    @Override
 //			    public void run() {

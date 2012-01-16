@@ -270,7 +270,7 @@ public class Model
 		{
 			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
 			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
-			
+
 		}
 		
 		
@@ -390,5 +390,10 @@ public class Model
 		ret.add(graph.getEndpoints(s));
 	    }
 	    return ret;
+	}
+
+	public void clearbestSubjectCollection() {
+		bestSubjectCollection = null;
+		
 	}
 }
