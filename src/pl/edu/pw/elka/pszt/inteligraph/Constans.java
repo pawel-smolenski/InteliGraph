@@ -9,7 +9,7 @@ public class Constans {
     /**
      * Szerokość okna.
      */
-    public static int WINDOW_WIDTH = 800;
+    public static int WINDOW_WIDTH = 1024;
 
     /**
      * Wysokość okna.
@@ -19,7 +19,7 @@ public class Constans {
     /**
      * Wysokość panelu.
      */
-    public static int PANEL_HEIGHT = 48;
+    public static int PANEL_HEIGHT = 50;
 
     /**
      * Wysokość statusBar.

@@ -59,6 +59,10 @@ public class Controller {
         			    public void run() {
         				view.getGraphParametersPanel().setStopButtonActive(true);
         				view.getGraphParametersPanel().setStepsButtonActive(false);
+        				model.setEdgeWeight(view.getGraphParametersPanel().getEdgeWeight());
+        				System.out.println(view
+						.getGraphParametersPanel()
+						.getEdgeWeight());
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda(), view.getSteps());
                 			if (view.getSteps() == 1)
                 			    view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroku...");
@@ -81,6 +85,7 @@ public class Controller {
         			    public void run() {
         				view.getGraphParametersPanel().setStopButtonActive(true);
         				view.getGraphParametersPanel().setStepsButtonActive(false);
+        				model.setEdgeWeight(view.getGraphParametersPanel().getEdgeWeight());
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda());	
                 			view.getStatusBar().setAppState("Liczę dla ∞ kroków...");
         			    }

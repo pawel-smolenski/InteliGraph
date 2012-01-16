@@ -26,6 +26,11 @@ public class Model
 	private int evolutionSteps = 0;
 	
 	/**
+	 * Waga krawędzi.
+	 */
+	private double edgeWeight = 0.5;
+
+	/**
 	 * Logiczny model grafu
 	 */
 	private Graph<VertexName, String> graph;
@@ -414,5 +419,9 @@ public class Model
 	public void clearbestSubjectCollection() {
 		bestSubjectCollection = null;
 		
+	}
+	
+	public void setEdgeWeight(double edgeWeight) {
+	    this.edgeWeight = edgeWeight;
 	}
 }
