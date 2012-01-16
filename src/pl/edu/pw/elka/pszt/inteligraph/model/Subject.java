@@ -9,8 +9,8 @@ public class Subject {
 	
 	private VertexName vertexName;
 	private Point point;
-	private Deviation deviation;
-	
+	private Deviation deviationX;
+	private Deviation deviationY;
 	/**
 	 * @param vertex 
 	 * @param point 
@@ -18,10 +18,11 @@ public class Subject {
 	 * @param deviation
 	 * 		odchylenie standardowe
 	 */
-	public Subject(VertexName vertex, Point point, Deviation deviation) {
+	public Subject(VertexName vertex, Point point, Deviation deviationX, Deviation deviationY) {
 		this.vertexName = vertex;
 		this.point = point;
-		this.deviation = deviation;
+		this.deviationX = deviationX;
+		this.deviationY = deviationY;
 	}
 
 	/**
@@ -36,8 +37,12 @@ public class Subject {
 	 * Zwarca odchylenie standardowe
 	 * @return
 	 */
-	public Deviation getDeviation() {
-		return deviation;
+	public Deviation getDeviationX() {
+		return deviationX;
+	}
+	
+	public Deviation getDeviationY() {
+		return deviationY;
 	}
 
 	/**
