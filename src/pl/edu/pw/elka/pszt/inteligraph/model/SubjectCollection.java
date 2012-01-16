@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Klasa reprezentująca zbiór osobników
  */
 
-public class SubjectCollection extends ArrayList<Subject> {
+public class SubjectCollection extends ArrayList<Subject> implements Comparable<SubjectCollection>{
 	
 	private Integer quality;
 
@@ -30,5 +30,17 @@ public class SubjectCollection extends ArrayList<Subject> {
 		}
 		return null;
 	}
+
+	@Override
+	public int compareTo(SubjectCollection anotherSubjectCollection)
+	{
+		if(this.quality < anotherSubjectCollection.getQuality())
+			return 1;
+		else if(this.quality < anotherSubjectCollection.getQuality())
+			return -1;
+		else
+			return 0;
+	}
 	
+
 }

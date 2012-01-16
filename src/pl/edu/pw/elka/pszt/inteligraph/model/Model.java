@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class Model
 	 * Wątek przeprowadzający obliczenia
 	 */
 	private Thread calculationThread;
+	private volatile Boolean stopThread = false;
 	
 	public Model(EventsBlockingQueue blockingQueue)
 	{
@@ -135,8 +137,7 @@ public class Model
 			@Override
 			public void run()
 			{
-				Population temporaryPopulation;
-				Population childrenPopulation;
+				Population temporaryPopulation, childrenPopulation, joinedPopulation;
 				SubjectCollection parentA, parentB, embryo, child;
 				Subject subjectA, subjectB, embryoSubject, childSubject;
 				Point embryoPoint, childPoint;
@@ -150,7 +151,9 @@ public class Model
 				tau = 1 / (Math.sqrt(2 * Math.sqrt(verticies.size())));
 				tauPrime = 1 / (Math.sqrt(2 * verticies.size()));
 				
-				while(evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo)
+				Model.this.evolutionSteps = 0;
+				
+				while(!Model.this.stopThread && (evolutionStepsToDo == null || Model.this.evolutionSteps < evolutionStepsToDo))
 				{
 					
 					//Losowanie tymczasowej populacji
@@ -206,6 +209,9 @@ public class Model
 							child.add(childSubject);
 						}
 						
+						//Oblicza jakość powstałego rozwiązania
+						Model.this.calculateQuality(child);
+						
 						childrenPopulation.add(child);
 						
 						parentA = parentB;
@@ -225,6 +231,19 @@ public class Model
 						}
 					}
 					
+					//Wybór mi najlepszych osobników spośród sumy populacji bazowej i dzieci
+					joinedPopulation = new Population();
+					joinedPopulation.addAll(Model.this.currentPopulation);
+					joinedPopulation.addAll(childrenPopulation);
+					Collections.sort(joinedPopulation);
+					Model.this.currentPopulation.clear();
+					
+					for(int m = 0; m < mi; m++)
+					{
+						Model.this.currentPopulation.add(joinedPopulation.get(m));
+					}
+					
+					//Zwiększanie licznika iteracji
 					Model.this.evolutionSteps++;
 					blockingQueue.add(new Event(EventName.ITERATION_ALGORITHM));
 					
