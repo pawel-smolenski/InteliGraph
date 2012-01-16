@@ -21,21 +21,24 @@ public class StatusBar extends JPanel {
     private JLabel graphVerticesLabel;
     private JLabel graphEdgesLabel;
     private JLabel graphQualityLabel;
+    private JLabel edgeWeightLabel;
     
     public StatusBar(EventsBlockingQueue blockingQueue) {
-	super(new GridLayout(1, 5));
+	super(new GridLayout(1, 6));
 	setPreferredSize(new Dimension(Constans.WINDOW_WIDTH, Constans.BAR_HEIGHT));
 	appStateLabel = new JLabel(appStateString);
 	evolutionStepsLabel = new JLabel("Liczba kroków: 0");
 	graphEdgesLabel = new JLabel();
 	graphVerticesLabel = new JLabel();
 	graphQualityLabel = new JLabel();
+	edgeWeightLabel = new JLabel();
 
 	this.add(appStateLabel);
 	this.add(evolutionStepsLabel);
 	this.add(graphVerticesLabel);
 	this.add(graphEdgesLabel);
 	this.add(graphQualityLabel);
+	this.add(edgeWeightLabel);
     }
     
     public void setAppState(String string) {
@@ -43,9 +46,10 @@ public class StatusBar extends JPanel {
 	this.updateUI();
     }
     
-    public void setEvolutionSteps(int steps, int quality) {
+    public void setEvolutionResults(int steps, int quality, double edgeWeight) {
 	evolutionStepsLabel.setText("Liczba kroków: " + steps);
 	graphQualityLabel.setText("Jakość: " + quality);
+	edgeWeightLabel.setText("waga: " + edgeWeight);
 	this.updateUI();
     }
     
