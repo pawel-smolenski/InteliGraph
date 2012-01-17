@@ -1,7 +1,12 @@
 package pl.edu.pw.elka.pszt.inteligraph.controller;
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import pl.edu.pw.elka.pszt.inteligraph.Constans;
 import pl.edu.pw.elka.pszt.inteligraph.events.Event;
@@ -18,6 +23,7 @@ public class Controller {
 	Model model;
 	View view;
 	EventsHandlersMap eventHandlers = new EventsHandlersMap();
+	Timer timer;
 	
 	public Controller(Model model, View view, EventsBlockingQueue blockingQueue) {
 		this.model = model;
@@ -68,6 +74,27 @@ public class Controller {
                 			    view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroku...");
                 			else 
                 			    view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroków...");
+        			    
+                			timer = new Timer(500, new ActionListener()
+    						{
+    							
+    							@Override
+    							public void actionPerformed(ActionEvent arg0)
+    							{
+    								try
+    								{
+    									blockingQueue.put(new Event(EventName.REFRESH_GRAPH));
+    								} catch (InterruptedException e)
+    								{
+    									// TODO Auto-generated catch block
+    									e.printStackTrace();
+    								}
+    								
+    							}
+    						});
+                    		
+                    		timer.start();
+        			    
         			    }
         			});
 
@@ -88,6 +115,27 @@ public class Controller {
         				model.setEdgeWeight(view.getGraphParametersPanel().getEdgeWeight());
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda());	
                 			view.getStatusBar().setAppState("Liczę dla ∞ kroków...");
+        			    
+                		timer = new Timer(500, new ActionListener()
+						{
+							
+							@Override
+							public void actionPerformed(ActionEvent arg0)
+							{
+								try
+								{
+									blockingQueue.put(new Event(EventName.REFRESH_GRAPH));
+								} catch (InterruptedException e)
+								{
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}
+						});
+                		
+                		timer.start();
+                			
         			    }
         			});
 			}
@@ -115,9 +163,29 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				timer.stop();
 //			    }
 //			});
 		    }
+		});
+		
+		eventHandlers.put(EventName.REFRESH_GRAPH, new EventHandler()
+		{
+			
+			@Override
+			public void execute()
+			{
+				try
+				{
+					view.setGraphView(model.getGraph(), model.getBestArrangement());
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 		});
 		
 		eventHandlers.put(EventName.ITERATION_ALGORITHM, new EventHandler() {
