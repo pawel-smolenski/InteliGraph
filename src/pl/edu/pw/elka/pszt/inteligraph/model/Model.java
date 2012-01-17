@@ -1,6 +1,7 @@
 package pl.edu.pw.elka.pszt.inteligraph.model;
 
 import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -316,33 +317,78 @@ public class Model
 			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
 
 		}
-		int przecinanie = 0, odchylenie = 0;
-		przecinanie += 100000*this.calculateCrossing(map,vertexPairList);
-		odchylenie += (int)100*this.edgeLengthVariation(map,vertexPairList,200);
+		int przecinanie = 0, odchylenie = 0, odlegloscVertexOdKrawedzi = 0;
+		przecinanie = 100000*this.calculateCrossing(map,vertexPairList);
+		odchylenie = this.edgeLengthVariation(map,vertexPairList,200);
+		if( odchylenie == Integer.MAX_VALUE)
+		{
+			solution.setQuality(Integer.MAX_VALUE);
+			return Integer.MAX_VALUE;
+		}
+		odlegloscVertexOdKrawedzi += (int)100*this.edgeDistanseToVertex(map,vertexPairList, vertexCollection, 200);
+		if(odlegloscVertexOdKrawedzi == Integer.MAX_VALUE)
+		{
+			solution.setQuality(Integer.MAX_VALUE);
+			return Integer.MAX_VALUE;
+		}
 		
 
 		
 		
 		
-		System.out.println("Przecinanie: " + przecinanie + " odchylenie: " + odchylenie);
-		quality = przecinanie + odchylenie;
+		System.out.println("Przecinanie: " + przecinanie + " odchylenie: " + odchylenie + "odleglosc: " + odlegloscVertexOdKrawedzi);
+		quality = przecinanie + odchylenie + odlegloscVertexOdKrawedzi;
 		solution.setQuality(quality);
 		return quality;
 	}
 	
 
-	private double edgeLengthVariation(Map<VertexName, Point> map,
+	private double edgeDistanseToVertex(Map<VertexName, Point> map,
+			List<Pair<VertexName>> vertexPairList,
+			Collection<VertexName> vertexCollection, int distance) {
+		double penalty = 0, currentDistance = 0;
+		for (VertexName currentVertex : vertexCollection)
+		{
+			for(Pair<VertexName> currentEdge : vertexPairList)
+			{
+				if(!currentEdge.contains(currentVertex))
+				{
+					currentDistance = Line2D.ptSegDist(map.get(currentEdge.getFirst()).x,
+							map.get(currentEdge.getFirst()).y,
+							map.get(currentEdge.getSecond()).x,
+							map.get(currentEdge.getSecond()).y,
+							map.get(currentVertex).x, 
+							map.get(currentVertex).y);
+					if(currentDistance < 20)
+						return Integer.MAX_VALUE;
+					currentDistance -= distance;
+					if(currentDistance < 0)
+						penalty += currentDistance * currentDistance;
+					
+				}
+			}
+		}
+		return penalty;
+	}
+
+	private int edgeLengthVariation(Map<VertexName, Point> map,
 			List<Pair<VertexName>> vertexPairList, double avg) 
 	{
-		double variation = 0, currentVariation = 0;
+		int variation = 0;
+		double currentVariation = 0;
 		for(Pair<VertexName> currentPair: vertexPairList )
 		{
+			
 			System.out.println(map.get(currentPair.getFirst()).distance(
 					map.get(currentPair.getSecond())));
 				currentVariation = map.get(currentPair.getFirst()).distance(map.get(currentPair.getSecond()))- avg;
 				if(currentVariation < 0)
-					currentVariation *= -4;
-				variation += currentVariation;
+					currentVariation *= -1;
+				if(currentVariation > 900)
+				return Integer.MAX_VALUE;
+					
+				if(currentVariation > 10)
+				variation += currentVariation * currentVariation;
 		}
 		return variation;
 	}
