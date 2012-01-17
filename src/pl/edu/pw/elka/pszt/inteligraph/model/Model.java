@@ -302,83 +302,79 @@ public class Model
 	{
 		int quality = 0, numberOfEdges = 0;
 		double currentEdgeLength = 0, edgeLengthSum = 0, avg = 0, longestEgde  = 0;
-		List<Pair<VertexName>> vertexPairList = getGraphEdges();
+		List<Pair<VertexName>> vertexPairList = getGraphEdges(); //lista krawędzi jako pary wierzchołków
 		Collection<VertexName> vertexCollection = graph.getVertices();
+		
 		
 		Map<VertexName, Point> map = new HashMap<VertexName, Point>();
 		for(Pair<VertexName> p: vertexPairList)
 		{	
 
-			currentEdgeLength = solution.getPoint(p.getFirst()).distance(solution.getPoint(p.getSecond()));
-			if(currentEdgeLength < 30 || currentEdgeLength > 50)
-			{
-				/*System.out.println(p.getFirst() + " " +p.getSecond()+ "za krótka:" + currentEdgeLength);
-				solution.setQuality(-1);
-				return -1;*/
-				quality += 1000;
-			}
-			if(currentEdgeLength > longestEgde)
-			{
-				longestEgde = currentEdgeLength;
-			}
-			numberOfEdges++;
-			edgeLengthSum += currentEdgeLength;
 			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
 			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
 
 		}
+		int przecinanie = 0, odchylenie = 0;
+		przecinanie += 100000*this.calculateCrossing(map,vertexPairList);
+		odchylenie += (int)100*this.edgeLengthVariation(map,vertexPairList,200);
+		
+
 		
 		
+		
+		System.out.println("Przecinanie: " + przecinanie + " odchylenie: " + odchylenie);
+		quality = przecinanie + odchylenie;
+		solution.setQuality(quality);
+		return quality;
+	}
+	
+
+	private double edgeLengthVariation(Map<VertexName, Point> map,
+			List<Pair<VertexName>> vertexPairList, double avg) 
+	{
+		double variation = 0, currentVariation = 0;
+		for(Pair<VertexName> currentPair: vertexPairList )
+		{
+			System.out.println(map.get(currentPair.getFirst()).distance(
+					map.get(currentPair.getSecond())));
+				currentVariation = map.get(currentPair.getFirst()).distance(map.get(currentPair.getSecond()))- avg;
+				if(currentVariation < 0)
+					currentVariation *= -4;
+				variation += currentVariation;
+		}
+		return variation;
+	}
+
+	private int  calculateCrossing(Map<VertexName, Point> map,
+			List<Pair<VertexName>> vertexPairList) {
+		
+		int crossing = 0;
 		
 		for(Pair<VertexName> pFirst: vertexPairList )
 		{
-			for(VertexName currentVertex: vertexCollection)
-			{
-				if((currentVertex.getName() != pFirst.getFirst().getName()) && (currentVertex.getName() != pFirst.getSecond().getName()) )
-				{
-					 double roznica = map.get(pFirst.getFirst()).distance(map.get(currentVertex)) + map.get(pFirst.getSecond()).distance(map.get(currentVertex)) - map.get(pFirst.getSecond()).distance(map.get(pFirst.getFirst()));
-					if( roznica - 2*map.get(pFirst.getSecond()).distance(map.get(pFirst.getFirst())) < 0 )
-					{
-						while ( roznica > 500)
-							roznica /= 10;
-						quality+= roznica;
-					}
-				}
-			}
 			for(Pair<VertexName> pSecond: vertexPairList )
 			{	
 				if(!checkPoints(pFirst, pSecond))
 				{
 				  //  System.out.println("wywołuje dla: [" + pFirst
 					//    + "] [" + pSecond + "]");
-					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
+					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) 
+					{
 					case -1:
-						solution.setQuality(-1);
 						return -1;
 
 					case 1:
-						quality += 10000;
+						crossing += 1;
 						break;
-					default:
-					    break;
 					}
 					
 				}
 					
 			}
 		}
-		//quality *= 100;
-		avg = edgeLengthSum/numberOfEdges;
-		/*while(edgeLengthSum * edgeWeight > 500)
-		{
-			edgeLengthSum /= 10;
-		}*/
-		//quality += (int)(edgeLengthSum * edgeWeight) + (int)longestEgde/avg*100;
-		System.out.println("quality: " + quality + " edgeSum: " + edgeLengthSum);
-		solution.setQuality(quality);
-		return quality;
+		return crossing/2;
+		
 	}
-	
 
 	/**
 	 * Sprawdza czy dwie pary punktów są takie same.
