@@ -25,7 +25,7 @@ public class Constans {
      * Wysokość statusBar.
      */
     public static int BAR_HEIGHT = 20;
-
+    
     /**
      * Komunikat o skończeniu liczenia pozycji wierzchołków grafu.
      */

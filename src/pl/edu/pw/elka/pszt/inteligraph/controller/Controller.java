@@ -160,7 +160,6 @@ public class Controller {
 					view.setGraphView(model.getGraph(), model.getBestArrangement());
 				} catch (Exception e)
 				{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
