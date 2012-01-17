@@ -52,6 +52,7 @@ public class StatusBar extends JPanel {
 	edgeWeightLabel.setText("waga: " + edgeWeight);
 	this.updateUI();
     }
+	
     
     public void setGraphParams(int vertices, int edges) {
 	graphVerticesLabel.setText("wierzchołki: " + vertices);
