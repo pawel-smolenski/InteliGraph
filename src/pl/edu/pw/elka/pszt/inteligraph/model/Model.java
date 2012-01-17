@@ -419,10 +419,10 @@ public class Model
 					point = new Point(random.nextInt(800), random.nextInt(600));
 
 					//Generowanie odchylenia
-					deviationX = new Deviation((int)(random.nextGaussian()*200 + 400));
+					deviationX = new Deviation((int)(random.nextGaussian() + 800));
 					
 					//Generowanie odchylenia
-					deviationY = new Deviation((int)(random.nextGaussian()*200 + 400));
+					deviationY = new Deviation((int)(random.nextGaussian()+ 600));
 					
 					//Tworzenie osobnika
 					subject = new Subject(vertex, point, deviationX, deviationY);
