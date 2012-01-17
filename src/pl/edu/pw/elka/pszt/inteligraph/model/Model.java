@@ -300,17 +300,55 @@ public class Model
 	 */
 	private Integer calculateQuality(SubjectCollection solution)
 	{
-		int quality = 0;
-		List<Pair<VertexName>> vertexPairList = getGraphEdges();
+		int quality = 0, numberOfEdges = 0;
+		double currentEdgeLength = 0, edgeLengthSum = 0, avg = 0, longestEgde  = 0;
+		List<Pair<VertexName>> vertexPairList = getGraphEdges(); //lista krawędzi jako pary wierzchołków
+		Collection<VertexName> vertexCollection = graph.getVertices();
+		
+		
 		Map<VertexName, Point> map = new HashMap<VertexName, Point>();
 		for(Pair<VertexName> p: vertexPairList)
-		{
+		{	
+
 			map.put(p.getFirst(), solution.getPoint(p.getFirst()));
 			map.put(p.getSecond(), solution.getPoint(p.getSecond()));
 
 		}
+		int przecinanie = 0, odchylenie = 0;
+		przecinanie += 100000*this.calculateCrossing(map,vertexPairList);
+		odchylenie += (int)100*this.edgeLengthVariation(map,vertexPairList,200);
+		
+
 		
 		
+		
+		System.out.println("Przecinanie: " + przecinanie + " odchylenie: " + odchylenie);
+		quality = przecinanie + odchylenie;
+		solution.setQuality(quality);
+		return quality;
+	}
+	
+
+	private double edgeLengthVariation(Map<VertexName, Point> map,
+			List<Pair<VertexName>> vertexPairList, double avg) 
+	{
+		double variation = 0, currentVariation = 0;
+		for(Pair<VertexName> currentPair: vertexPairList )
+		{
+			System.out.println(map.get(currentPair.getFirst()).distance(
+					map.get(currentPair.getSecond())));
+				currentVariation = map.get(currentPair.getFirst()).distance(map.get(currentPair.getSecond()))- avg;
+				if(currentVariation < 0)
+					currentVariation *= -4;
+				variation += currentVariation;
+		}
+		return variation;
+	}
+
+	private int  calculateCrossing(Map<VertexName, Point> map,
+			List<Pair<VertexName>> vertexPairList) {
+		
+		int crossing = 0;
 		
 		for(Pair<VertexName> pFirst: vertexPairList )
 		{
@@ -318,29 +356,25 @@ public class Model
 			{	
 				if(!checkPoints(pFirst, pSecond))
 				{
-				    System.out.println("wywołuje dla: [" + pFirst
-					    + "] [" + pSecond + "]");
-					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) {
+				  //  System.out.println("wywołuje dla: [" + pFirst
+					//    + "] [" + pSecond + "]");
+					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) 
+					{
 					case -1:
-						solution.setQuality(-1);
 						return -1;
 
 					case 1:
-						quality++;
+						crossing += 1;
 						break;
-					default:
-					    break;
 					}
 					
 				}
 					
 			}
 		}
-		System.out.println("quality: " + quality);
-		solution.setQuality(quality);
-		return quality;
+		return crossing/2;
+		
 	}
-	
 
 	/**
 	 * Sprawdza czy dwie pary punktów są takie same.
@@ -395,7 +429,7 @@ public class Model
 					subjectCollection.add(subject);
 					
 				}
-				
+				System.out.println("zawiecha");
 			} while( this.calculateQuality(subjectCollection) < 0 ); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji
