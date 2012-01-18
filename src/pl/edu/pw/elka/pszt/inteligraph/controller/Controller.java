@@ -221,7 +221,7 @@ public class Controller {
         			SwingUtilities.invokeLater(new Runnable() {
         			    @Override
         			    public void run() {
-        				view.showPopupWindow("Podano złe parametry dla algorytmu.\nMuszą być to liczby całkowite większe od 2.", "Uwaga!", JOptionPane.WARNING_MESSAGE);
+        				view.showPopupWindow("Podano złe parametry dla algorytmu.\nMuszą być to liczby całkowite oraz:\nλ >= 2\nμ >= 1\nn >= 1", "Uwaga!", JOptionPane.WARNING_MESSAGE);
         				view.getStatusBar().setAppState("Proszę poprawić!");
         			    }
         			});
