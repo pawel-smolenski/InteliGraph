@@ -103,7 +103,7 @@ public class Model
 		
 		Arrangement arrangement = new Arrangement();
 		
-		System.out.println("UWAGA TUTAJ BEDZIE TO CZEGO SZUKAMY::::");
+		//System.out.println("UWAGA TUTAJ BEDZIE TO CZEGO SZUKAMY::::");
 		calculateQuality(bestSubjectCollection);
 		
 		for(Subject subject : this.bestSubjectCollection)
@@ -316,14 +316,14 @@ public class Model
 
 		}
 		int przecinanie = 0, odchylenie = 0, odlegloscVertexOdKrawedzi = 0;
-		przecinanie = 100000*this.calculateCrossing(map,vertexPairList);
-		odchylenie = this.edgeLengthVariation(map,vertexPairList,200);
+		przecinanie = 5000*this.calculateCrossing(map,vertexPairList);
+		odchylenie = this.edgeLengthVariation(map,vertexPairList,100);
 		if( odchylenie == Integer.MAX_VALUE)
 		{
 			solution.setQuality(Integer.MAX_VALUE);
 			return Integer.MAX_VALUE;
 		}
-		odlegloscVertexOdKrawedzi += (int)100*this.edgeDistanseToVertex(map,vertexPairList, vertexCollection, 200);
+		odlegloscVertexOdKrawedzi += (int)this.edgeDistanseToVertex(map,vertexPairList, vertexCollection, 75);
 		if(odlegloscVertexOdKrawedzi == Integer.MAX_VALUE)
 		{
 			solution.setQuality(Integer.MAX_VALUE);
@@ -334,7 +334,7 @@ public class Model
 		
 		
 		
-		System.out.println("Przecinanie: " + przecinanie + " odchylenie: " + odchylenie + "odleglosc: " + odlegloscVertexOdKrawedzi);
+		//System.out.println("Przecinanie: " + przecinanie + " odchylenie: " + odchylenie + "odleglosc: " + odlegloscVertexOdKrawedzi);
 		quality = przecinanie + odchylenie + odlegloscVertexOdKrawedzi;
 		solution.setQuality(quality);
 		return quality;
@@ -351,6 +351,7 @@ public class Model
 			{
 				if(!currentEdge.contains(currentVertex))
 				{
+				
 					currentDistance = Line2D.ptSegDist(map.get(currentEdge.getFirst()).x,
 							map.get(currentEdge.getFirst()).y,
 							map.get(currentEdge.getSecond()).x,
@@ -361,7 +362,7 @@ public class Model
 						return Integer.MAX_VALUE;
 					currentDistance -= distance;
 					if(currentDistance < 0)
-						penalty += currentDistance * currentDistance;
+						penalty += currentDistance * currentDistance/100;
 					
 				}
 			}
@@ -377,16 +378,18 @@ public class Model
 		for(Pair<VertexName> currentPair: vertexPairList )
 		{
 			
-			System.out.println(map.get(currentPair.getFirst()).distance(
-					map.get(currentPair.getSecond())));
+			
 				currentVariation = map.get(currentPair.getFirst()).distance(map.get(currentPair.getSecond()))- avg;
 				if(currentVariation < 0)
 					currentVariation *= -1;
-				if(currentVariation > 900)
+				if(currentVariation > 600)
 				return Integer.MAX_VALUE;
 					
-				if(currentVariation > 10)
-				variation += currentVariation * currentVariation;
+				if(currentVariation > 20)
+				variation += currentVariation * currentVariation/100;
+				
+				//System.out.println(map.get(currentPair.getFirst()).distance(
+				//		map.get(currentPair.getSecond())) + " kara :" + currentVariation * currentVariation);
 		}
 		return variation;
 	}
@@ -406,8 +409,6 @@ public class Model
 					//    + "] [" + pSecond + "]");
 					switch (Sections.isCrossing(map.get(pFirst.getFirst()), map.get(pFirst.getSecond()), map.get(pSecond.getFirst()), map.get(pSecond.getSecond()))) 
 					{
-					case -1:
-						return -1;
 
 					case 1:
 						crossing += 1;
@@ -475,7 +476,7 @@ public class Model
 					subjectCollection.add(subject);
 					
 				}
-				System.out.println("zawiecha");
+				//System.out.println("zawiecha");
 			} while( this.calculateQuality(subjectCollection) < 0 ); //Losuje tak długo, aż rozwiązanie będzie dopuszczalne
 			
 			//Dodawanie rozwiązania do populacji

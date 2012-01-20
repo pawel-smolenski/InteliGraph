@@ -65,4 +65,9 @@
 		<begin>8</begin>
 		<end>7</end>
 	</edge>
+		<edge>
+		<name> Połączeasdnie 6-8</name>
+		<begin>6</begin>
+		<end>8</end>
+	</edge>
 </graph>
