@@ -26,6 +26,11 @@ public enum EventName {
 	DRAW_GRAPH_STOP,
 	
 	/**
+	 * Odświeżenie grafu
+	 */
+	REFRESH_GRAPH,
+	
+	/**
 	 * Odświeżanie iteracji.
 	 */
 	ITERATION_ALGORITHM,

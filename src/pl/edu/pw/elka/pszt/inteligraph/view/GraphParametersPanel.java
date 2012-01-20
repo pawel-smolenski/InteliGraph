@@ -92,7 +92,7 @@ public class GraphParametersPanel extends JPanel {
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
-		if (lambda >= 1 && mi >= 1 && steps >= 1) {
+		if (lambda >= 2 && mi >= 1 && steps >= 1) {
 		    blockingQueue.add(new Event(EventName.DRAW_GRAPH_N));
 		} else {
 		    throw new NumberFormatException();
@@ -113,7 +113,7 @@ public class GraphParametersPanel extends JPanel {
 		lambda = Integer.parseInt(lambdaField.getText());
 		mi = Integer.parseInt(miField.getText());
 		steps = Integer.parseInt(stepsField.getText());
-		if (lambda >= 1 && mi >= 1 && steps >= 1) {
+		if (lambda >= 2 && mi >= 1 && steps >= 1) {
 		    blockingQueue.add(new Event(EventName.DRAW_GRAPH_INF));
 		} else {
 		    throw new NumberFormatException();
