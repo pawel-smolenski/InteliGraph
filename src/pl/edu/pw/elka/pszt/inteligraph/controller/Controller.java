@@ -75,7 +75,7 @@ public class Controller {
                 			else 
                 			    view.getStatusBar().setAppState("Liczę dla " + view.getSteps() + " kroków...");
         			    
-                			timer = new Timer(500, new ActionListener()
+                			timer = new Timer(1000, new ActionListener()
     						{
     							
     							@Override
@@ -116,7 +116,7 @@ public class Controller {
                 			model.calculateVerticesPositions(view.getMi(), view.getLambda());	
                 			view.getStatusBar().setAppState("Liczę dla ∞ kroków...");
         			    
-                		timer = new Timer(500, new ActionListener()
+                		timer = new Timer(1000, new ActionListener()
 						{
 							
 							@Override
